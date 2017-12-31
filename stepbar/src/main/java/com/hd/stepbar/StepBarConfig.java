@@ -10,34 +10,98 @@ public class StepBarConfig {
 
     public enum StepSate {
         /**
-         * 当前正在进行中的状态
+         * current working state
          */
         RUNNING,
 
         /**
-         * 待完成(等待)状态
+         * be waiting state
          */
         WAITING,
 
         /**
-         * 已完成
+         * be complete
          */
         COMPLETED,
 
         /**
-         * 失败
+         * be fail
          */
         FAILED
     }
 
-    private LinkedList<StepBarBean> beanList;
+    public enum StepShowState {
+
+        /**
+         * static show
+         */
+        STATIC,
+
+        /**
+         * dynamic show
+         */
+        DYNAMIC
+
+    }
+
+    public interface stepCallback {
+
+        /**
+         * will be called all the time if set the state{@link StepShowState#DYNAMIC}
+         *
+         * @param bean current running bean{@link StepBarBean}
+         * @param position current running position
+         *
+         * @return start the next step if return true
+         */
+        boolean step(StepBarBean bean, int position);
+    }
 
     /**
-     * 设置文本文字大小
+     * the outside icon ring width
      */
-    private int textSize;
+    private int outsideIconRingWidth=5;
+    /**
+     * the text size
+     */
+    private float textSize=12f;
+    /**
+     * the icon circle radius,
+     * if the value is not set, the icon will be automatically resized in the allowable range，
+     * on the contrary, the icon will remain the specified size, and the view will slide
+     * if the sliding direction{@link android.widget.LinearLayout#HORIZONTAL}
+     * or {@link android.widget.LinearLayout#VERTICAL} is set at the same time.
+     */
+    private int iconCircleRadius=0;
 
-    public StepBarConfig() {
+    private LinkedList<StepBarBean> beanList;
+
+    private StepShowState showState=StepShowState.STATIC;
+
+    private stepCallback callback;
+
+    public int getOutsideIconRingWidth() {
+        return outsideIconRingWidth;
+    }
+
+    public void setOutsideIconRingWidth(int outsideIconRingWidth) {
+        this.outsideIconRingWidth = outsideIconRingWidth;
+    }
+
+    public float getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
+    }
+
+    public int getIconCircleRadius() {
+        return iconCircleRadius;
+    }
+
+    public void setIconCircleRadius(int iconCircleRadius) {
+        this.iconCircleRadius = iconCircleRadius;
     }
 
     public LinkedList<StepBarBean> getBeanList() {
@@ -48,12 +112,19 @@ public class StepBarConfig {
         this.beanList = beanList;
     }
 
-    public int getTextSize() {
-        return textSize;
+    public StepShowState getShowState() {
+        return showState;
     }
 
-    public void setTextSize(int textSize) {
-        this.textSize = textSize;
+    public void setShowState(StepShowState showState) {
+        this.showState = showState;
     }
 
+    public stepCallback getCallback() {
+        return callback;
+    }
+
+    public void setCallback(stepCallback callback) {
+        this.callback = callback;
+    }
 }

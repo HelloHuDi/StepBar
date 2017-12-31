@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="stepBarViewStyle">
+        <attr name="defaultConnectLineColor" format="color" />
+        <attr name="switchConnectLineColor" format="color"/>
+        <attr name="switchTime" format="integer"/>
+        <attr name="normalTextColor" format="color"/>
+        <attr name="completedTextColor" format="color"/>
+        <attr name="failedTextColor" format="color"/>
+        <attr name="outsideIconRingColor" format="color"/>
+        <attr name="outsideIconRingWidth" format="integer"/>
+        <attr name="textSize" format="float"/>
+    </declare-styleable>
+</resources>

@@ -33,7 +33,7 @@ public class StepBarBean {
     /**
      * 从当前位置切换到下一个位置用时，单位ms，默认100ms
      */
-    private int switchTime=100;
+    private int switchTime = 100;
     /**
      * 正常状态下文本颜色
      */
@@ -194,7 +194,7 @@ public class StepBarBean {
         }
 
         public Builder setFailedIcon(Drawable failedIcon) {
-            bean.failedIcon=failedIcon;
+            bean.failedIcon = failedIcon;
             return this;
         }
 
