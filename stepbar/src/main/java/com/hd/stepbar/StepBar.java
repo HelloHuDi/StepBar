@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -13,13 +14,15 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.hd.stepbar.indicator.HorizontalStepBarViewIndicator;
+import com.hd.stepbar.indicator.StepBarViewIndicator;
+import com.hd.stepbar.indicator.VerticalStepBarViewIndicator;
+
 /**
  * Created by hd on 2017/12/31 .
- *
+ * controllable step bar
  */
 public class StepBar extends LinearLayout {
-
-    private StepBarViewIndicator stepBarViewIndicator;
 
     private StepBarConfig config;
 
@@ -45,7 +48,23 @@ public class StepBar extends LinearLayout {
     }
 
     private void init(AttributeSet attrs) {
+        removeAllViews();
         checkBeanAttrs(attrs);
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.step_bar, getViewGroup());
+        LinearLayout linearLayout = rootView.findViewById(R.id.stepBarGroup);
+        StepBarViewIndicator stepBarViewIndicator;
+        if (getOrientation() == HORIZONTAL) {
+            stepBarViewIndicator = new HorizontalStepBarViewIndicator(getContext());
+        } else {
+            stepBarViewIndicator = new VerticalStepBarViewIndicator(getContext());
+        }
+        linearLayout.removeAllViews();
+        stepBarViewIndicator.addConfig(config);
+        linearLayout.addView(stepBarViewIndicator);
+    }
+
+    @NonNull
+    private ViewGroup getViewGroup() {
         ViewGroup viewGroup = this;
         if (config.getIconCircleRadius() > 0) {
             if (getOrientation() == HORIZONTAL) {
@@ -57,16 +76,7 @@ public class StepBar extends LinearLayout {
             }
             addView(viewGroup, 0);
         }
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.step_bar, viewGroup);
-        LinearLayout linearLayout = rootView.findViewById(R.id.stepBarGroup);
-        if (getOrientation() == HORIZONTAL) {
-            stepBarViewIndicator = new HorizontalStepBarViewIndicator(getContext());
-        } else {
-            // TODO: 2017/12/31
-        }
-        linearLayout.removeAllViews();
-        stepBarViewIndicator.addConfig(config);
-        linearLayout.addView(stepBarViewIndicator);
+        return viewGroup;
     }
 
     private void checkBeanAttrs(AttributeSet attrs) {

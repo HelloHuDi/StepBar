@@ -15,9 +15,13 @@ public class StepBarBean {
      */
     private Drawable failedIcon;
     /**
-     * 正常状态下的图标
+     * 等待状态下的图标
      */
-    private Drawable normalIcon;
+    private Drawable waitingIcon;
+    /**
+     * 当前执行状态下的图标
+     */
+    private Drawable runningIcon;
     /**
      * 完成后的图标
      */
@@ -35,13 +39,17 @@ public class StepBarBean {
      */
     private int switchTime = 100;
     /**
-     * 正常状态下文本颜色
+     * 当前执行状态下文本颜色
      */
-    private int normalTextColor = Color.BLACK;
+    private int runningTextColor = Color.YELLOW;
+    /**
+     * 等待状态下文本颜色
+     */
+    private int waitingTextColor = Color.DKGRAY;
     /**
      * 完成后文本颜色
      */
-    private int completedTextColor = Color.BLACK;
+    private int completedTextColor = Color.GREEN;
     /**
      * 失败后文本颜色
      */
@@ -49,11 +57,15 @@ public class StepBarBean {
     /**
      * 图标外环光圈的颜色
      */
-    private int outsideIconRingColor = Color.GREEN;
+    private int outsideIconRingColor = Color.YELLOW;
     /**
-     * 正常状态下文本内容
+     * 当前执行状态下文本内容
      */
-    private String normalText;
+    private String runningText;
+    /**
+     * 等待状态下文本内容
+     */
+    private String waitingText;
     /**
      * 完成后文本内容，若未设置则保持于正常状态下文本内容一致
      */
@@ -69,7 +81,8 @@ public class StepBarBean {
 
     public StepBarBean(Context context) {
         failedIcon = ContextCompat.getDrawable(context, R.drawable.failed_icon);
-        normalIcon = ContextCompat.getDrawable(context, R.drawable.normal_icon);
+        waitingIcon = ContextCompat.getDrawable(context, R.drawable.waiting_icon);
+        runningIcon = ContextCompat.getDrawable(context, R.drawable.running_icon);
         completedIcon = ContextCompat.getDrawable(context, R.drawable.completed_icon);
     }
 
@@ -81,12 +94,20 @@ public class StepBarBean {
         this.failedIcon = failedIcon;
     }
 
-    public Drawable getNormalIcon() {
-        return normalIcon;
+    public Drawable getWaitingIcon() {
+        return waitingIcon;
     }
 
-    public void setNormalIcon(Drawable normalIcon) {
-        this.normalIcon = normalIcon;
+    public void setWaitingIcon(Drawable waitingIcon) {
+        this.waitingIcon = waitingIcon;
+    }
+
+    public Drawable getRunningIcon() {
+        return runningIcon;
+    }
+
+    public void setRunningIcon(Drawable runningIcon) {
+        this.runningIcon = runningIcon;
     }
 
     public Drawable getCompletedIcon() {
@@ -121,12 +142,20 @@ public class StepBarBean {
         this.switchTime = switchTime;
     }
 
-    public int getNormalTextColor() {
-        return normalTextColor;
+    public int getRunningTextColor() {
+        return runningTextColor;
     }
 
-    public void setNormalTextColor(int normalTextColor) {
-        this.normalTextColor = normalTextColor;
+    public void setRunningTextColor(int runningTextColor) {
+        this.runningTextColor = runningTextColor;
+    }
+
+    public int getWaitingTextColor() {
+        return waitingTextColor;
+    }
+
+    public void setWaitingTextColor(int waitingTextColor) {
+        this.waitingTextColor = waitingTextColor;
     }
 
     public int getCompletedTextColor() {
@@ -153,12 +182,20 @@ public class StepBarBean {
         this.outsideIconRingColor = outsideIconRingColor;
     }
 
-    public String getNormalText() {
-        return normalText;
+    public String getRunningText() {
+        return runningText;
     }
 
-    public void setNormalText(String normalText) {
-        this.normalText = normalText;
+    public void setRunningText(String runningText) {
+        this.runningText = runningText;
+    }
+
+    public String getWaitingText() {
+        return waitingText;
+    }
+
+    public void setWaitingText(String waitingText) {
+        this.waitingText = waitingText;
     }
 
     public String getCompletedText() {
@@ -198,8 +235,13 @@ public class StepBarBean {
             return this;
         }
 
-        public Builder setNormalIcon(Drawable normalIcon) {
-            bean.normalIcon = normalIcon;
+        public Builder setWaitingIcon(Drawable waitingIcon) {
+            bean.waitingIcon = waitingIcon;
+            return this;
+        }
+
+        public Builder setRunningIcon(Drawable runningIcon) {
+            bean.runningIcon = runningIcon;
             return this;
         }
 
@@ -223,11 +265,15 @@ public class StepBarBean {
             return this;
         }
 
-        public Builder setNormalTextColor(int normalTextColor) {
-            bean.normalTextColor = normalTextColor;
+        public Builder setRunningTextColor(int runningTextColor) {
+            bean.runningTextColor = runningTextColor;
             return this;
         }
 
+        public Builder setWaitingTextColor(int waitingTextColor) {
+            bean.waitingTextColor = waitingTextColor;
+            return this;
+        }
         public Builder setCompletedTextColor(int completedTextColor) {
             bean.completedTextColor = completedTextColor;
             return this;
@@ -243,8 +289,13 @@ public class StepBarBean {
             return this;
         }
 
-        public Builder setNormalText(String normalText) {
-            bean.normalText = normalText;
+        public Builder setRunningText(String runningText) {
+            bean.runningText = runningText;
+            return this;
+        }
+
+        public Builder setWaitingText(String waitingText) {
+            bean.waitingText = waitingText;
             return this;
         }
 
