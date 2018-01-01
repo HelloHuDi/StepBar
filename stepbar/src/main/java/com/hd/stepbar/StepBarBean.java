@@ -27,17 +27,9 @@ public class StepBarBean {
      */
     private Drawable completedIcon;
     /**
-     * 默认状态下连接线颜色
+     * 连接线颜色
      */
-    private int defaultConnectLineColor = Color.WHITE;
-    /**
-     * 切换位置状态下连接线颜色
-     */
-    private int switchConnectLineColor = Color.RED;
-    /**
-     * 从当前位置切换到下一个位置用时，单位ms，默认100ms
-     */
-    private int switchTime = 100;
+    private int connectLineColor = Color.WHITE;
     /**
      * 当前执行状态下文本颜色
      */
@@ -118,28 +110,12 @@ public class StepBarBean {
         this.completedIcon = completedIcon;
     }
 
-    public int getDefaultConnectLineColor() {
-        return defaultConnectLineColor;
+    public int getConnectLineColor() {
+        return connectLineColor;
     }
 
-    public void setDefaultConnectLineColor(int defaultConnectLineColor) {
-        this.defaultConnectLineColor = defaultConnectLineColor;
-    }
-
-    public int getSwitchConnectLineColor() {
-        return switchConnectLineColor;
-    }
-
-    public void setSwitchConnectLineColor(int switchConnectLineColor) {
-        this.switchConnectLineColor = switchConnectLineColor;
-    }
-
-    public int getSwitchTime() {
-        return switchTime;
-    }
-
-    public void setSwitchTime(int switchTime) {
-        this.switchTime = switchTime;
+    public void setConnectLineColor(int connectLineColor) {
+        this.connectLineColor = connectLineColor;
     }
 
     public int getRunningTextColor() {
@@ -250,18 +226,8 @@ public class StepBarBean {
             return this;
         }
 
-        public Builder setDefaultConnectLineColor(int defaultConnectLineColor) {
-            bean.defaultConnectLineColor = defaultConnectLineColor;
-            return this;
-        }
-
-        public Builder setSwitchConnectLineColor(int switchConnectLineColor) {
-            bean.switchConnectLineColor = switchConnectLineColor;
-            return this;
-        }
-
-        public Builder setSwitchTime(int switchTime) {
-            bean.switchTime = switchTime;
+        public Builder setConnectLineColor(int connectLineColor) {
+            bean.connectLineColor = connectLineColor;
             return this;
         }
 

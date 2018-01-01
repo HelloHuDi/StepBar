@@ -80,14 +80,14 @@ public class StepBarConfig {
     /**
      * customizing connection line change effect when allowing state switching
      */
-    public interface SwitchStateConnectLineCallback{
+    public interface ConnectLineSwitchStateCallback{
         /**
          * @param config get current bean{@link this#getBeanList()} with position,
          * and update others bean
          * @param canvas step bar view canvas
          * @param position current running position
          */
-        void drawConnectLine(StepBarConfig config, Canvas canvas, int position);
+        void drawSwitchChange(StepBarConfig config, Canvas canvas, int position);
     }
 
     /**
@@ -105,7 +105,7 @@ public class StepBarConfig {
      * if the sliding direction{@link android.widget.LinearLayout#HORIZONTAL}
      * or {@link android.widget.LinearLayout#VERTICAL} is set at the same time.
      */
-    private int iconCircleRadius = 50;
+    private int iconCircleRadius = 0;
 
     private LinkedList<StepBarBean> beanList;
 
@@ -115,7 +115,7 @@ public class StepBarConfig {
 
     private OutSideIconRingCallback outSideIconRingCallback;
 
-    private SwitchStateConnectLineCallback switchStateConnectLineCallback;
+    private ConnectLineSwitchStateCallback connectLineSwitchStateCallback;
 
     public int getOutsideIconRingWidth() {
         return outsideIconRingWidth;
@@ -180,12 +180,11 @@ public class StepBarConfig {
         return this;
     }
 
-    public SwitchStateConnectLineCallback getSwitchStateConnectLineCallback() {
-        return switchStateConnectLineCallback;
+    public ConnectLineSwitchStateCallback getConnectLineSwitchStateCallback() {
+        return connectLineSwitchStateCallback;
     }
 
-    public StepBarConfig addSwitchStateConnectLineCallback(StepBarConfig.SwitchStateConnectLineCallback switchStateConnectLineCallback) {
-        this.switchStateConnectLineCallback = switchStateConnectLineCallback;
-        return this;
+    public void addConnectLineSwitchStateCallback(ConnectLineSwitchStateCallback connectLineSwitchStateCallback) {
+        this.connectLineSwitchStateCallback = connectLineSwitchStateCallback;
     }
 }

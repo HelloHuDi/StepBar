@@ -11,15 +11,15 @@ import android.util.AttributeSet;
 public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
 
     public VerticalStepBarViewIndicator(Context context) {
-        super(context);
+        super(context,1);
     }
 
     public VerticalStepBarViewIndicator(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs,1);
     }
 
     public VerticalStepBarViewIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr,1);
     }
 
     @Override
