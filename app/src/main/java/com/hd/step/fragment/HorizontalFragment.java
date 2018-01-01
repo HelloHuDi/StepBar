@@ -17,7 +17,7 @@ import java.util.TimerTask;
 
 /**
  * Created by hd on 2018/1/1 .
- * 
+ *
  */
 public class HorizontalFragment extends BaseFragment {
 
@@ -65,7 +65,7 @@ public class HorizontalFragment extends BaseFragment {
      */
     private void initStepBar4(StepBar stepBar) {
         initTimeTask();
-        StepBarConfig config = new StepBarConfig().setBeanList(createBean(8, 0))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createBean(6, 0))//
                                                   .setIconCircleRadius(40)//注释后自动调整大小
                                                   .setShowState(StepBarConfig.StepShowState.DYNAMIC)//
                                                   .addStepCallback(new StepBarConfig.StepCallback() {
