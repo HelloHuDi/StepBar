@@ -10,6 +10,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -47,7 +48,7 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
 
     protected float middleMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
 
-    protected float connectLineLength ;
+    protected float connectLineLength;
 
     /**
      * all icon center point position
@@ -200,7 +201,7 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
             outsideIconRingRadius = iconRadius + config.getOutsideIconRingWidth();
         } else {
             // automatically resized
-            outsideIconRingRadius = (orientation == 0 ? width : height) / (beanSize * 3.0f + 1);
+            outsideIconRingRadius = (orientation == 0 ? width : height) / (beanSize * 3 + 1);
             iconRadius = outsideIconRingRadius - config.getOutsideIconRingWidth();
         }
         middleMargin = iconRadius;
@@ -208,7 +209,8 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
             paddingTop = paddingBottom = (height - outsideIconRingRadius * 2 - measureFontSize()[1] - middleMargin) / 2.0f;
             connectLineLength = paddingLeft = paddingRight = outsideIconRingRadius;
         } else {//vertical
-            // TODO: 2018/1/1
+            connectLineLength = paddingTop = paddingBottom = outsideIconRingRadius;
+            paddingLeft = paddingRight = outsideIconRingRadius / 2.0f;
         }
     }
 
@@ -219,21 +221,36 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
         for (int index = 0, count = config.getBeanList().size(); index < count; index++) {
             Point point = centerPointList.get(index);
             if (index < count - 1) {
-                float startX, endX;
-                if (config.getBeanList().get(index).getState() == StepBarConfig.StepSate.RUNNING) {
-                    startX = (orientation == 0 ? point.x : point.y) + outsideIconRingRadius;
-                } else {
-                    startX = (orientation == 0 ? point.x : point.y) + iconRadius;
-                }
-                if (config.getBeanList().get(index + 1).getState() == StepBarConfig.StepSate.RUNNING) {
-                    endX = (orientation == 0 ? point.x : point.y) + outsideIconRingRadius + connectLineLength;
-                } else {
-                    endX = (orientation == 0 ? point.x : point.y) + iconRadius + 2 * config.getOutsideIconRingWidth() + connectLineLength;
+                float startX, startY, endX, endY;
+                if (orientation == 0) {//horizontal
+                    if (config.getBeanList().get(index).getState() == StepBarConfig.StepSate.RUNNING) {
+                        startX = point.x + outsideIconRingRadius;
+                    } else {
+                        startX = point.x + iconRadius;
+                    }
+                    if (config.getBeanList().get(index + 1).getState() == StepBarConfig.StepSate.RUNNING) {
+                        endX = point.x + outsideIconRingRadius + connectLineLength;
+                    } else {
+                        endX = point.x + iconRadius + 2 * config.getOutsideIconRingWidth() + connectLineLength;
+                    }
+                    startY = endY = point.y;
+                } else {//vertical
+                    if (config.getBeanList().get(index).getState() == StepBarConfig.StepSate.RUNNING) {
+                        startY = point.y + outsideIconRingRadius;
+                    } else {
+                        startY = point.y + iconRadius;
+                    }
+                    if (config.getBeanList().get(index + 1).getState() == StepBarConfig.StepSate.RUNNING) {
+                        endY = point.y + outsideIconRingRadius + connectLineLength;
+                    } else {
+                        endY = point.y + iconRadius + 2 * config.getOutsideIconRingWidth() + connectLineLength;
+                    }
+                    startX = endX = point.x;
                 }
                 connectLineArray[index][0] = startX;
-                connectLineArray[index][1] = orientation == 1 ? point.x : point.y;
+                connectLineArray[index][1] = startY;
                 connectLineArray[index][2] = endX;
-                connectLineArray[index][3] = orientation == 1 ? point.x : point.y;
+                connectLineArray[index][3] = endY;
             }
         }
     }
@@ -242,6 +259,20 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
      * adjust text font size，avoid the overlay of the text
      */
     protected void adjustFontSize() {
+        String maxCountText = getMaxCountText();
+        Log.e(TAG, "text font size adjust start :" + textSize + "==max count text :" + maxCountText);
+        int maxTextCountSize = measureFontSize(maxCountText)[orientation];
+        while (maxTextCountSize > 2.8 * outsideIconRingRadius) {
+            textSize -= 0.2f;
+            config.setTextSize(textSize);
+            setPaintTextSize();
+            maxTextCountSize = measureFontSize(maxCountText)[orientation];
+        }
+        Log.e(TAG, "text font size adjust complete :" + textSize);
+    }
+
+    @NonNull
+    protected String getMaxCountText() {
         String maxCountText = "";
         if (config != null && config.getBeanList() != null) {
             // select max count of text
@@ -255,15 +286,7 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
                 maxCountText = maxCountText.length() > failed_text.length() ? maxCountText : failed_text;
             }
         }
-        Log.e(TAG, "text font size adjust start :" + textSize + "==max count text :" + maxCountText);
-        int maxTextCountSize = measureFontSize(maxCountText)[orientation];
-        while (maxTextCountSize > 2.8 * outsideIconRingRadius) {
-            textSize -= 0.2f;
-            config.setTextSize(textSize);
-            setPaintTextSize();
-            maxTextCountSize = measureFontSize(maxCountText)[orientation];
-        }
-        Log.e(TAG, "text font size adjust complete :" + textSize);
+        return maxCountText;
     }
 
 
@@ -278,7 +301,7 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
         /**
          * slide view
          */
-        void slide(int x, int y,float radius);
+        void slide(int x, int y, float radius);
     }
 
     private SlideCallback slideCallback;
@@ -346,7 +369,7 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
                     drawStepBar();
                     if (slideCallback != null) {
                         Point point = centerPointList.get(position);
-                        slideCallback.slide(point.x, point.y,outsideIconRingRadius);
+                        slideCallback.slide(point.x, point.y, outsideIconRingRadius);
                     }
                 }
             }

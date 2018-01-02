@@ -37,7 +37,7 @@ public class HorizontalFragment extends BaseFragment {
      * 静态 ，大小动态调整
      */
     private void initStepBar1(StepBar stepBar) {
-        StepBarConfig config = new StepBarConfig().setBeanList(createBean(20, 2))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(20, 2))//
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
     }
@@ -46,7 +46,7 @@ public class HorizontalFragment extends BaseFragment {
      * 静态 ，大小动态调整
      */
     private void initStepBar2(StepBar stepBar) {
-        StepBarConfig config = new StepBarConfig().setBeanList(createBean(10, 0));
+        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(10, 0));
         stepBar.addConfig(config);
     }
 
@@ -54,7 +54,7 @@ public class HorizontalFragment extends BaseFragment {
      * 静态 ，设置图标大小，可滑动
      */
     private void initStepBar3(StepBar stepBar) {
-        StepBarConfig config = new StepBarConfig().setBeanList(createBean(10, 2))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(10, 2))//
                                                   .setIconCircleRadius(50)//
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
@@ -65,7 +65,7 @@ public class HorizontalFragment extends BaseFragment {
      */
     private void initStepBar4(StepBar stepBar) {
         initTimeTask();
-        StepBarConfig config = new StepBarConfig().setBeanList(createBean(6, 0))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(6, 0))//
                                                   .setIconCircleRadius(40)//注释后自动调整大小
                                                   .setShowState(StepBarConfig.StepShowState.DYNAMIC)//
                                                   .addStepCallback(new StepBarConfig.StepCallback() {
@@ -91,7 +91,7 @@ public class HorizontalFragment extends BaseFragment {
      * 设置外圆环宽度
      */
     private void initStepBar5(StepBar stepBar) {
-        StepBarConfig config = new StepBarConfig().setBeanList(createBean(7, 2))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(7, 2))//
                                                   .setOutsideIconRingWidth(0)//
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);

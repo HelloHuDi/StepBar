@@ -78,20 +78,21 @@ public class HorizontalStepBarViewIndicator extends StepBarViewIndicator {
             mainPaint.setColor(bean.getConnectLineColor());
             //draw connect background line
             if (index < count - 1) {
-                canvas.drawLine(connectLineArray[index][0], connectLineArray[index][1], connectLineArray[index][2], connectLineArray[index][3], mainPaint);
+                canvas.drawLine(connectLineArray[index][0], connectLineArray[index][1], //
+                                connectLineArray[index][2], connectLineArray[index][3], mainPaint);
             }
             if (config.getShowState() == StepBarConfig.StepShowState.DYNAMIC) {
                 //draw dynamic outside ring
-                if (bean.getState() == StepBarConfig.StepSate.RUNNING && outsideIconRingRadius>iconRadius) {
+                if (bean.getState() == StepBarConfig.StepSate.RUNNING && outsideIconRingRadius > iconRadius) {
                     if (config.getOutSideIconRingCallback() != null) {
                         config.getOutSideIconRingCallback().drawRing(config, canvas, position);
-                    } else if (ringAnimator!=null) {
+                    } else if (ringAnimator != null) {
                         drawDefaultRingAnimator(canvas, bean);
                     }
                 }
             } else {//static state
                 //draw static outside ring
-                if (bean.getState() == StepBarConfig.StepSate.RUNNING && outsideIconRingRadius>iconRadius) {
+                if (bean.getState() == StepBarConfig.StepSate.RUNNING && outsideIconRingRadius > iconRadius) {
                     runPaint.setStrokeWidth(config.getOutsideIconRingWidth());
                     runPaint.setStyle(Paint.Style.STROKE);
                     runPaint.setColor(bean.getOutsideIconRingColor());
@@ -143,7 +144,8 @@ public class HorizontalStepBarViewIndicator extends StepBarViewIndicator {
         } else {
             textPaint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         }
-        canvas.drawText(text, 0, text.length(), point.x - textWidth / 2, point.y + outsideIconRingRadius + textHeight + middleMargin, textPaint);
+        canvas.drawText(text, 0, text.length(), point.x - textWidth / 2, //
+                        point.y + outsideIconRingRadius + textHeight + middleMargin, textPaint);
     }
 
 }

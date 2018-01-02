@@ -17,7 +17,6 @@ import com.hd.step.fragment.VerticalFragment;
  */
 public class MainActivity extends AppCompatActivity {
 
-
     private BaseFragment baseFragment;
 
     @Override
@@ -25,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        baseFragment=new HorizontalFragment();
+//        baseFragment=new HorizontalFragment();
+        baseFragment=new VerticalFragment();
         fragmentTransaction.add(R.id.stepbarContainer, baseFragment).commitAllowingStateLoss();
     }
 
