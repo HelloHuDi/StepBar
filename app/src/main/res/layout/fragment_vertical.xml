@@ -5,14 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.hd.stepbar.StepBar
-        android:id="@+id/stepBar1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"/>
-<!--
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,6 +19,11 @@
             android:gravity="center"
             android:orientation="vertical"/>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_green_dark"/>
+
         <com.hd.stepbar.StepBar
             android:id="@+id/stepBar2"
             android:layout_width="0dp"
@@ -35,6 +32,11 @@
             android:gravity="center"
             android:orientation="vertical"/>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_green_dark"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,15 +52,18 @@
             android:gravity="center"
             android:orientation="vertical"/>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_green_dark"/>
+
         <com.hd.stepbar.StepBar
             android:id="@+id/stepBar4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_green_dark"
             android:gravity="center"
             android:orientation="vertical"/>
     </LinearLayout>
--->
 
 </LinearLayout>

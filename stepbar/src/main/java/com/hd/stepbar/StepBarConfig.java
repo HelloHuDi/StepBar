@@ -93,7 +93,7 @@ public class StepBarConfig {
     /**
      * the outside icon ring width
      */
-    private int outsideIconRingWidth = 5;
+    private int outsideIconRingWidth = 2;
     /**
      * the text size
      */

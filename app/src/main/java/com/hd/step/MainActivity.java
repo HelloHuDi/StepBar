@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         baseFragment=new VerticalFragment();
         fragmentTransaction.add(R.id.stepbarContainer, baseFragment).commitAllowingStateLoss();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);

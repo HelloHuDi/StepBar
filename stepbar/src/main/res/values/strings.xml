@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">stepbar</string>
+    <string name="app_name">StepBar</string>
+    <string name="test_text">test</string>
 </resources>

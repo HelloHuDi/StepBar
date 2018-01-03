@@ -26,9 +26,9 @@ public class VerticalFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_vertical, null);
         initStepBar1((StepBar) rootView.findViewById(R.id.stepBar1));
-//        initStepBar2((StepBar) rootView.findViewById(R.id.stepBar2));
-//        initStepBar3((StepBar) rootView.findViewById(R.id.stepBar3));
-//        initStepBar4((StepBar) rootView.findViewById(R.id.stepBar4));
+        initStepBar2((StepBar) rootView.findViewById(R.id.stepBar2));
+        initStepBar3((StepBar) rootView.findViewById(R.id.stepBar3));
+        initStepBar4((StepBar) rootView.findViewById(R.id.stepBar4));
         return rootView;
     }
 
@@ -39,7 +39,7 @@ public class VerticalFragment extends BaseFragment {
     }
 
     private void initStepBar2(StepBar stepBar) {
-        StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(15, 2))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(20, 2))//
                                                   .setIconCircleRadius(30)//
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
@@ -70,8 +70,8 @@ public class VerticalFragment extends BaseFragment {
     }
 
     private void initStepBar4(StepBar stepBar) {
-        StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(7, 2))//
-                                                  .setOutsideIconRingWidth(0)//
+        StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(12, 2))//
+                                                  .setOutsideIconRingWidth(5)//
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
     }

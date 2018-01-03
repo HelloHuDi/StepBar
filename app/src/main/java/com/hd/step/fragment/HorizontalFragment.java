@@ -20,7 +20,6 @@ import java.util.TimerTask;
  *
  */
 public class HorizontalFragment extends BaseFragment {
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class HorizontalFragment extends BaseFragment {
      * 静态 ，大小动态调整
      */
     private void initStepBar1(StepBar stepBar) {
-        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(20, 2))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(30, 2))//
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
     }

@@ -2,7 +2,6 @@ package com.hd.stepbar;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -42,10 +41,11 @@ public class StepBar extends LinearLayout {
         init();
     }
 
+    private ViewGroup viewGroup;
+
     private void init() {
-        removeAllViews();
         final Handler handler = new Handler();
-        final ViewGroup viewGroup = getViewGroup();
+        getViewGroup();
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.step_bar, viewGroup);
         LinearLayout linearLayout = rootView.findViewById(R.id.stepBarGroup);
         final StepBarViewIndicator stepBarViewIndicator;
@@ -62,7 +62,7 @@ public class StepBar extends LinearLayout {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        viewGroup.scrollTo((int) (x-4*radius), y);
+                        viewGroup.scrollTo((int) (x - 4 * radius), y);
                     }
                 });
             }
@@ -70,9 +70,8 @@ public class StepBar extends LinearLayout {
         linearLayout.addView(stepBarViewIndicator);
     }
 
-    @NonNull
-    private ViewGroup getViewGroup() {
-        ViewGroup viewGroup = this;
+    private void getViewGroup() {
+        removeAllViews();
         if (config.getIconCircleRadius() > 0) {
             if (getOrientation() == HORIZONTAL) {
                 viewGroup = new HorizontalScrollView(getContext());
@@ -80,11 +79,12 @@ public class StepBar extends LinearLayout {
                 ((HorizontalScrollView) viewGroup).setSmoothScrollingEnabled(true);
             } else {
                 viewGroup = new ScrollView(getContext());
-                viewGroup.setVerticalFadingEdgeEnabled(false);
+                viewGroup.setVerticalScrollBarEnabled(false);
                 ((ScrollView) viewGroup).setSmoothScrollingEnabled(true);
             }
             addView(viewGroup, 0);
+        } else {
+            viewGroup = this;
         }
-        return viewGroup;
     }
 }

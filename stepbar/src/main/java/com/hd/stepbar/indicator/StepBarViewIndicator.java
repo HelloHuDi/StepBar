@@ -3,20 +3,16 @@ package com.hd.stepbar.indicator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PixelFormat;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 
+import com.hd.stepbar.R;
 import com.hd.stepbar.StepBarBean;
 import com.hd.stepbar.StepBarConfig;
 import com.hd.stepbar.animator.StepBarAnimator;
@@ -28,17 +24,13 @@ import java.util.LinkedList;
  * Created by hd on 2017/12/30 .
  * step bar
  */
-public abstract class StepBarViewIndicator extends SurfaceView implements SurfaceHolder.Callback, Runnable {
+public abstract class StepBarViewIndicator extends VIndicator {
 
     private String TAG = StepBarViewIndicator.class.getSimpleName();
 
     protected StepBarConfig config;
 
-    protected SurfaceHolder holder;
-
     protected Paint textPaint, linePaint, mainPaint, runPaint;
-
-    protected boolean isDraw;
 
     protected float iconRadius, outsideIconRingRadius;
 
@@ -74,8 +66,6 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
 
     protected StepBarAnimator ringAnimator;
 
-    private Canvas canvas;
-
     /**
      * step bar orientation ,0: horizontal, 1 :vertical
      */
@@ -94,10 +84,6 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
     }
 
     protected void init() {
-        this.setZOrderOnTop(true);
-        this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        holder = getHolder();
-        holder.addCallback(this);
         mainPaint = initSmoothPaint();
         textPaint = initSmoothPaint();
         linePaint = initSmoothPaint();
@@ -108,6 +94,7 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
             connectLineArray = new float[config.getBeanList().size() - 1][4];
             setPaintTextSize();
             checkStartPosition();
+            startRingAnimator();
         }
     }
 
@@ -143,7 +130,7 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
     }
 
     protected int[] measureFontSize() {
-        return measureFontSize("测试");
+        return measureFontSize(getResources().getString(R.string.test_text));
     }
 
     protected void stopRingAnimator() {
@@ -201,7 +188,7 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
             outsideIconRingRadius = iconRadius + config.getOutsideIconRingWidth();
         } else {
             // automatically resized
-            outsideIconRingRadius = (orientation == 0 ? width : height) / (beanSize * 3 + 1);
+            outsideIconRingRadius = (orientation == 0 ? width : height) / ((beanSize * 3.0f + 1.0f));
             iconRadius = outsideIconRingRadius - config.getOutsideIconRingWidth();
         }
         middleMargin = iconRadius;
@@ -329,53 +316,36 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        isDraw = true;
-        new Thread(this).start();
+    public boolean isStatic() {
+        return config != null && config.getShowState() == StepBarConfig.StepShowState.STATIC;
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        isDraw = false;
-    }
-
-    @Override
-    public void run() {
-        if (config != null) {
-            if (config.getShowState() == StepBarConfig.StepShowState.DYNAMIC) {
-                startRingAnimator();
-                while (isDraw) {
-                    if (config.getStepCallback() != null) {
-                        if (config.getStepCallback().step(config, position)) {
-                            updatePosition();
-                            adjustConnectLineLength();
-                            stopRingAnimator();
-                            startRingAnimator();
-                        } else {
-                            //the current position icon state is no longer the running state,
-                            //set static display，not refresh all the time
-                            if (config.getBeanList().get(position).getState() != StepBarConfig.StepSate.RUNNING) {
-                                isDraw = false;
-                                config.setShowState(StepBarConfig.StepShowState.STATIC);
-                                break;
-                            }
-                        }
-                    }
-                    drawStepBar();
-                    if (slideCallback != null) {
-                        Point point = centerPointList.get(position);
-                        slideCallback.slide(point.x, point.y, outsideIconRingRadius);
+    public void drawStepBar(Canvas canvas) {
+        if (!isStatic()) {
+            if (config.getStepCallback() != null) {
+                if (config.getStepCallback().step(config, position)) {
+                    updatePosition();
+                    adjustConnectLineLength();
+                    stopRingAnimator();
+                    startRingAnimator();
+                } else {
+                    //the current position icon state is no longer the running state,
+                    //set static display，not refresh all the time
+                    if (config.getBeanList().get(position).getState() != StepBarConfig.StepSate.RUNNING) {
+                        config.setShowState(StepBarConfig.StepShowState.STATIC);
                     }
                 }
             }
+            startDraw(canvas);
+            if (slideCallback != null) {
+                Point point = centerPointList.get(position);
+                slideCallback.slide(point.x, point.y, outsideIconRingRadius);
+            }
+        } else {
+            stopRingAnimator();
+            startDraw(canvas);
         }
-        stopRingAnimator();
-        drawStepBar();
     }
 
     private void updatePosition() {
@@ -383,24 +353,10 @@ public abstract class StepBarViewIndicator extends SurfaceView implements Surfac
         if (position == config.getBeanList().size() - 1) {//completed
             config.setShowState(StepBarConfig.StepShowState.STATIC);
             stopRingAnimator();
-            isDraw = false;
         } else {
             //open the next step
             position += 1;
             config.getBeanList().get(position).setState(StepBarConfig.StepSate.RUNNING);
-        }
-    }
-
-    private void drawStepBar() {
-        try {
-            canvas = holder.lockCanvas();
-            if (canvas == null)
-                return;
-            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            startDraw(canvas);
-        } finally {
-            if (canvas != null)
-                holder.unlockCanvasAndPost(canvas);
         }
     }
 }

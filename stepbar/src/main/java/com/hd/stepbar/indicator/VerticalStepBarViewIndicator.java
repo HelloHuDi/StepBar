@@ -50,15 +50,15 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
             centerPointList.clear();
             int beanSize = config.getBeanList().size();
             selectRightRadius(w, h, beanSize);
-//            adjustFontSize();
+            //            adjustFontSize();
             for (int index = 0, count = config.getBeanList().size(); index < count; index++) {
                 @SuppressLint("DrawAllocation") Point point = new Point();
                 point.x = (int) (paddingLeft + outsideIconRingRadius);
                 point.y = (int) (paddingTop + index * outsideIconRingRadius * 2 + index * connectLineLength + outsideIconRingRadius);
                 centerPointList.add(point);
                 //add icon rect
-                iconRectArray[index] = new Rect(point.x-(int)outsideIconRingRadius,point.y-(int)outsideIconRingRadius,//
-                                                point.x+(int)outsideIconRingRadius,point.y+(int)outsideIconRingRadius);
+                iconRectArray[index] = new Rect(point.x - (int) outsideIconRingRadius, point.y - (int) outsideIconRingRadius,//
+                                                point.x + (int) outsideIconRingRadius, point.y + (int) outsideIconRingRadius);
             }
             //connect line
             adjustConnectLineLength();
@@ -79,7 +79,7 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
         }
     }
 
-    private LinkedList<String[]> textsList=new LinkedList<>();
+    private LinkedList<String[]> textsList = new LinkedList<>();
 
     @Override
     protected void startDraw(Canvas canvas) {
