@@ -33,7 +33,7 @@ public class VerticalFragment extends BaseFragment {
     }
 
     private void initStepBar1(StepBar stepBar) {
-        StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(10, 2))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(20, 2))//
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
     }

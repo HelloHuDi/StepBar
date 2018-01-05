@@ -2,15 +2,10 @@ package com.hd.stepbar.indicator;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-
-import com.hd.stepbar.StepBarBean;
-
-import java.util.LinkedList;
+import android.util.Log;
 
 /**
  * Created by hd on 2017/12/31 .
@@ -34,7 +29,7 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (config != null && config.getIconCircleRadius() > 0 && config.getBeanList() != null) {
             int beanSize = config.getBeanList().size();
-            int Width = MeasureSpec.getSize(heightMeasureSpec);
+            int Width = MeasureSpec.getSize(widthMeasureSpec);
             selectRightRadius(Width, 0, beanSize);
             int Height = (int) (outsideIconRingRadius * (beanSize * 3 + 1) + getPaddingTop() + getPaddingBottom());
             setMeasuredDimension(Width, Height);
@@ -50,7 +45,7 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
             centerPointList.clear();
             int beanSize = config.getBeanList().size();
             selectRightRadius(w, h, beanSize);
-            //            adjustFontSize();
+            adjustFontSize();
             for (int index = 0, count = config.getBeanList().size(); index < count; index++) {
                 @SuppressLint("DrawAllocation") Point point = new Point();
                 point.x = (int) (paddingLeft + outsideIconRingRadius);
@@ -65,68 +60,59 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
         }
     }
 
+    /**
+     * if the font size is set, the text will not be fully displayed in the maximum available range,
+     * then the font size will be automatically adjusted.
+     */
     @Override
     protected void adjustFontSize() {
         //there may be multiple lines of text
         String maxCountText = getMaxCountText();
-        float availableWidth = getMeasuredWidth() - paddingLeft - paddingRight -//
-                getPaddingLeft() - getPaddingRight() - middleMargin;
-        int maxTextWidth = measureFontSize(maxCountText)[0];
-        if (maxTextWidth < availableWidth) {//single lines of text
-            super.adjustFontSize();
+        float maxCountTextWidth = measureFontSize(maxCountText)[0];
+        float availableTextHeight = 2 * outsideIconRingRadius+2*(outsideIconRingRadius/3.0f);
+        if (maxCountTextWidth < availableTextWidth) {//single lines of text
+            adjustFontSize(maxCountText);
         } else {//multiple lines of text
-
+            getNumCount(maxCountText);
+            Log.e("tag","multiple lines of text and need adjust font size,current font size :"+textSize+",lines :"+numCount);
+            int allTextHeight = getAllNumTextHeight();
+            while (allTextHeight > availableTextHeight) {
+                textSize -= 0.2f;
+                config.setTextSize(textSize);
+                setPaintTextSize();
+                numCount=1;
+                getNumCount(maxCountText);
+                allTextHeight = getAllNumTextHeight();
+            }
+            Log.e("tag","font size after adjusting :"+textSize+",lines :"+numCount);
         }
     }
 
-    private LinkedList<String[]> textsList = new LinkedList<>();
+    private int getAllNumTextHeight() {
+        int num = numCount;
+        int allTextHeight=0;
+        float height=measureFontSize()[1];
+        while (num > 0) {
+            allTextHeight += height;
+            num--;
+        }
+        return allTextHeight;
+    }
 
-    @Override
-    protected void startDraw(Canvas canvas) {
-        for (int index = 0, count = centerPointList.size(); index < count; index++) {
-            Point point = centerPointList.get(index);
-            StepBarBean bean = config.getBeanList().get(index);
-            //draw icon and draw text
-            Drawable icon;
-            String text;
-            switch (bean.getState()) {
-                case RUNNING:
-                    icon = bean.getRunningIcon();
-                    text = bean.getRunningText();
-                    textPaint.setColor(bean.getRunningTextColor());
-                    break;
-                case WAITING:
-                    icon = bean.getWaitingIcon();
-                    text = bean.getWaitingText();
-                    textPaint.setColor(bean.getWaitingTextColor());
-                    break;
-                case COMPLETED:
-                    icon = bean.getCompletedIcon();
-                    text = bean.getCompletedText();
-                    textPaint.setColor(bean.getCompletedTextColor());
-                    break;
-                case FAILED:
-                    icon = bean.getFailedIcon();
-                    text = bean.getFailedText();
-                    textPaint.setColor(bean.getFailedTextColor());
-                    break;
-                default:
-                    icon = bean.getWaitingIcon();
-                    text = "";
-                    textPaint.setColor(bean.getWaitingTextColor());
-                    break;
-            }
-            //draw icon
-            icon.setBounds(iconRectArray[index]);
-            icon.draw(canvas);
-            //draw text
-            //draw line
-            mainPaint.setColor(bean.getConnectLineColor());
-            //draw connect background line
-            if (index < count - 1) {
-                canvas.drawLine(connectLineArray[index][0], connectLineArray[index][1], //
-                                connectLineArray[index][2], connectLineArray[index][3], mainPaint);
+    private int numCount = 1;
+
+    private int getNumCount(String text) {
+        int text_width = 0;
+        for (int index = 0, count = text.length(); index < count; index++) {
+            text_width += measureFontSize(String.valueOf(text.charAt(index)))[0];
+            if (text_width > availableTextWidth) {
+                numCount++;
+                String s=text.substring(index, count);
+               return getNumCount(s);
             }
         }
+        return numCount++;
     }
+
+
 }

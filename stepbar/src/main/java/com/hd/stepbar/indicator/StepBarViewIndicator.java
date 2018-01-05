@@ -7,10 +7,19 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.hd.stepbar.R;
 import com.hd.stepbar.StepBarBean;
@@ -30,15 +39,17 @@ public abstract class StepBarViewIndicator extends VIndicator {
 
     protected StepBarConfig config;
 
-    protected Paint textPaint, linePaint, mainPaint, runPaint;
+    protected Paint mainPaint, runPaint;
 
     protected float iconRadius, outsideIconRingRadius;
 
     protected float textSize;
 
+    protected float availableTextWidth;
+
     protected float paddingRight, paddingLeft, paddingTop, paddingBottom;
 
-    protected float middleMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+    protected float middleMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 10, getResources().getDisplayMetrics());
 
     protected float connectLineLength;
 
@@ -71,8 +82,6 @@ public abstract class StepBarViewIndicator extends VIndicator {
      */
     private int orientation;
 
-    protected abstract void startDraw(Canvas canvas);
-
     protected Paint initSmoothPaint() {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
@@ -85,10 +94,7 @@ public abstract class StepBarViewIndicator extends VIndicator {
 
     protected void init() {
         mainPaint = initSmoothPaint();
-        textPaint = initSmoothPaint();
-        linePaint = initSmoothPaint();
         runPaint = initSmoothPaint();
-        linePaint.setStrokeWidth(10);
         if (config != null && config.getBeanList() != null) {
             iconRectArray = new Rect[config.getBeanList().size()];
             connectLineArray = new float[config.getBeanList().size() - 1][4];
@@ -111,11 +117,10 @@ public abstract class StepBarViewIndicator extends VIndicator {
 
     protected void setPaintTextSize() {
         textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, config.getTextSize(), getResources().getDisplayMetrics());
-        textPaint.setTextSize(textSize);
     }
 
-    protected int[] measureFontSize(String text, float size) {
-        int[] fontSize = new int[2];
+    protected float[] measureFontSize(String text, float size) {
+        float[] fontSize = new float[2];
         Rect rect = new Rect();
         Paint paint = new Paint();
         paint.setTextSize(size);
@@ -125,11 +130,11 @@ public abstract class StepBarViewIndicator extends VIndicator {
         return fontSize;
     }
 
-    protected int[] measureFontSize(String text) {
+    protected float[] measureFontSize(String text) {
         return measureFontSize(text, textSize);
     }
 
-    protected int[] measureFontSize() {
+    protected float[] measureFontSize() {
         return measureFontSize(getResources().getString(R.string.test_text));
     }
 
@@ -164,9 +169,193 @@ public abstract class StepBarViewIndicator extends VIndicator {
     }
 
     /**
+     * start draw step bar
+     */
+    protected void startDraw(Canvas canvas) {
+        for (int index = 0, count = centerPointList.size(); index < count; index++) {
+            Point point = centerPointList.get(index);
+            StepBarBean bean = config.getBeanList().get(index);
+            drawIconAndText(canvas, iconRectArray[index], point, bean);
+            drawConnectLine(canvas, index, bean);
+            drawRing(canvas, point, bean);
+        }
+    }
+
+    /**
+     * draw icon and text
+     */
+    protected void drawIconAndText(Canvas canvas, Rect bounds, Point point, StepBarBean bean) {
+        Drawable icon;
+        String text;
+        int textColor;
+        switch (bean.getState()) {
+            case RUNNING:
+                icon = bean.getRunningIcon();
+                text = bean.getRunningText();
+                textColor = bean.getRunningTextColor();
+                break;
+            case WAITING:
+                icon = bean.getWaitingIcon();
+                text = bean.getWaitingText();
+                textColor = bean.getWaitingTextColor();
+                break;
+            case COMPLETED:
+                icon = bean.getCompletedIcon();
+                text = bean.getCompletedText();
+                textColor = bean.getCompletedTextColor();
+                break;
+            case FAILED:
+                icon = bean.getFailedIcon();
+                text = bean.getFailedText();
+                textColor = bean.getFailedTextColor();
+                break;
+            default:
+                icon = bean.getWaitingIcon();
+                text = "";
+                textColor = bean.getWaitingTextColor();
+                break;
+        }
+        //draw icon
+        icon.setBounds(bounds);
+        icon.draw(canvas);
+        //draw text
+        drawText(canvas, point, bean, text, textColor);
+    }
+
+    /**
+     * draw text drawable
+     */
+    private void drawText(Canvas canvas, Point point, StepBarBean bean, final String text, int textColor) {
+        initTextContainer();
+        float[] textSizes = measureFontSize(text);
+        float textWidth = textSizes[0];
+        float textHeight = textSizes[1];
+        Rect rect;
+        if (orientation == 0) {//horizontal
+            rect = new Rect((int) (point.x - textWidth / 2), (int) (point.y + outsideIconRingRadius + middleMargin),//
+                            (int) (point.x + textWidth / 2), (int) (point.y + outsideIconRingRadius + textHeight + middleMargin));
+        } else {//vertical
+            rect = new Rect(
+                    (int) (point.x + outsideIconRingRadius + middleMargin), //
+                    (int) (point.y - outsideIconRingRadius - outsideIconRingRadius / 3.0f),//
+                    (int) (getMeasuredWidth() - getPaddingRight() - paddingRight),//
+                    (int) (point.y + outsideIconRingRadius + outsideIconRingRadius / 3.0f));
+        }
+        if (bean.getState() == StepBarConfig.StepSate.RUNNING) {
+            textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        } else {
+            textView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        }
+        textView.setText(text);
+        textView.setTextColor(textColor);
+        relativeLayout.addView(textView);
+        if (linearLayout != null) {
+            linearLayout.addView(relativeLayout);
+        }
+        Drawable drawable = convertViewToDrawable(orientation == 1 ? linearLayout : relativeLayout);
+        drawable.setBounds(rect);
+        drawable.draw(canvas);
+        textView.destroyDrawingCache();
+        relativeLayout.destroyDrawingCache();
+        if (linearLayout != null) {
+            linearLayout.destroyDrawingCache();
+        }
+    }
+
+    private LinearLayout linearLayout = null;
+    private RelativeLayout relativeLayout;
+    private TextView textView;
+
+    protected void initTextContainer() {
+        relativeLayout = new RelativeLayout(getContext());
+        textView = new TextView(getContext());
+        if (orientation == 0) {
+            relativeLayout.setGravity(Gravity.CENTER);
+        } else {
+            relativeLayout.setGravity(Gravity.START | Gravity.CENTER);
+        }
+        if (orientation == 0) {
+            textView.setGravity(Gravity.CENTER);
+            relativeLayout.setLayoutParams(new RelativeLayout.LayoutParams((int) availableTextWidth, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        } else if (orientation == 1) {
+            textView.setGravity(Gravity.START | Gravity.CENTER);
+            relativeLayout.setLayoutParams(new RelativeLayout.LayoutParams((int) (availableTextWidth),//
+                     (int) (3 * outsideIconRingRadius + 2 * (outsideIconRingRadius / 3.0f))));
+            linearLayout = new LinearLayout(getContext());
+            linearLayout.setGravity(Gravity.START | Gravity.CENTER);
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
+        textView.setSingleLine(false);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+    }
+
+    /**
+     * textView convert drawable
+     */
+    private Drawable convertViewToDrawable(View view) {
+        view.measure(
+                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), //
+                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.buildDrawingCache();
+        return new BitmapDrawable(null, view.getDrawingCache());
+    }
+
+    /**
+     * draw connect background line
+     */
+    protected void drawConnectLine(Canvas canvas, int index, StepBarBean bean) {
+        mainPaint.setColor(bean.getConnectLineColor());
+        if (index < centerPointList.size() - 1) {
+            canvas.drawLine(connectLineArray[index][0], connectLineArray[index][1], //
+                            connectLineArray[index][2], connectLineArray[index][3], mainPaint);
+        }
+    }
+
+    /**
+     * draw outside icon ring
+     */
+    protected void drawRing(Canvas canvas, Point point, StepBarBean bean) {
+        if (config.getShowState() == StepBarConfig.StepShowState.DYNAMIC) {
+            //draw dynamic outside ring
+            if (bean.getState() == StepBarConfig.StepSate.RUNNING && outsideIconRingRadius > iconRadius) {
+                if (config.getOutSideIconRingCallback() != null) {
+                    config.getOutSideIconRingCallback().drawRing(config, canvas, position);
+                } else if (ringAnimator != null) {
+                    drawDefaultRingAnimatorEffect(canvas, point, bean);
+                }
+            }
+        } else {//static state
+            //draw static outside ring
+            if (bean.getState() == StepBarConfig.StepSate.RUNNING && outsideIconRingRadius > iconRadius) {
+                drawBackgroundRing(canvas, point, bean);
+            }
+        }
+    }
+
+    /**
      * draw default outside icon ring dynamic effect
      */
-    protected void drawDefaultRingAnimator(Canvas canvas, StepBarBean bean) {
+    protected void drawDefaultRingAnimatorEffect(Canvas canvas, Point point, StepBarBean bean) {
+        drawBackgroundRing(canvas, point, bean);
+        drawForegroundRing(canvas, bean);
+    }
+
+    /**
+     * draw ring with background color
+     */
+    private void drawBackgroundRing(Canvas canvas, Point point, StepBarBean bean) {
+        runPaint.setStrokeWidth(config.getOutsideIconRingWidth());
+        runPaint.setStyle(Paint.Style.STROKE);
+        runPaint.setColor(bean.getOutsideIconRingBackgroundColor());
+        canvas.drawCircle(point.x, point.y, outsideIconRingRadius, runPaint);
+    }
+
+    /**
+     * draw ring with foreground color
+     */
+    private void drawForegroundRing(Canvas canvas, StepBarBean bean) {
         ringAnimator.mPath.reset();
         ringAnimator.mPath.lineTo(0, 0);
         float stop = ringAnimator.pathLength * ringAnimator.animatorValue;
@@ -174,7 +363,7 @@ public abstract class StepBarViewIndicator extends VIndicator {
         ringAnimator.pathMeasure.getSegment(start, stop, ringAnimator.mPath, true);
         runPaint.setStrokeWidth(config.getOutsideIconRingWidth());
         runPaint.setStyle(Paint.Style.STROKE);
-        runPaint.setColor(bean.getOutsideIconRingColor());
+        runPaint.setColor(bean.getOutsideIconRingForegroundColor());
         canvas.drawPath(ringAnimator.mPath, runPaint);
     }
 
@@ -185,19 +374,33 @@ public abstract class StepBarViewIndicator extends VIndicator {
     protected void selectRightRadius(int width, int height, int beanSize) {
         if (config.getIconCircleRadius() > 0) {
             iconRadius = config.getIconCircleRadius();
+            adjustRingWidth(iconRadius);
             outsideIconRingRadius = iconRadius + config.getOutsideIconRingWidth();
         } else {
             // automatically resized
             outsideIconRingRadius = (orientation == 0 ? width : height) / ((beanSize * 3.0f + 1.0f));
+            adjustRingWidth(outsideIconRingRadius);
             iconRadius = outsideIconRingRadius - config.getOutsideIconRingWidth();
         }
-        middleMargin = iconRadius;
+        middleMargin = outsideIconRingRadius / 2.0f;
         if (orientation == 0) {//horizontal
             paddingTop = paddingBottom = (height - outsideIconRingRadius * 2 - measureFontSize()[1] - middleMargin) / 2.0f;
             connectLineLength = paddingLeft = paddingRight = outsideIconRingRadius;
+            availableTextWidth = 3 * outsideIconRingRadius;
         } else {//vertical
             connectLineLength = paddingTop = paddingBottom = outsideIconRingRadius;
             paddingLeft = paddingRight = outsideIconRingRadius / 2.0f;
+            availableTextWidth = width - paddingLeft - paddingRight - getPaddingLeft() - //
+                    getPaddingRight() - middleMargin - outsideIconRingRadius * 2;
+        }
+    }
+
+    /**
+     * adjust ring width size automatically
+     */
+    private void adjustRingWidth(float size) {
+        if (config.getOutsideIconRingWidth() < 0) {
+            config.setOutsideIconRingWidth(size * 0.08f);
         }
     }
 
@@ -246,9 +449,12 @@ public abstract class StepBarViewIndicator extends VIndicator {
      * adjust text font size，avoid the overlay of the text
      */
     protected void adjustFontSize() {
-        String maxCountText = getMaxCountText();
+        adjustFontSize(getMaxCountText());
+    }
+
+    protected void adjustFontSize(String maxCountText) {
         Log.e(TAG, "text font size adjust start :" + textSize + "==max count text :" + maxCountText);
-        int maxTextCountSize = measureFontSize(maxCountText)[orientation];
+        float maxTextCountSize = measureFontSize(maxCountText)[orientation];
         while (maxTextCountSize > 2.8 * outsideIconRingRadius) {
             textSize -= 0.2f;
             config.setTextSize(textSize);
@@ -276,7 +482,6 @@ public abstract class StepBarViewIndicator extends VIndicator {
         return maxCountText;
     }
 
-
     public void addConfig(StepBarConfig config) {
         this.config = config;
         init();
@@ -288,7 +493,7 @@ public abstract class StepBarViewIndicator extends VIndicator {
         /**
          * slide view
          */
-        void slide(int x, int y, float radius);
+        void slide(int iconCenterX, int iconCenterY, float radius);
     }
 
     private SlideCallback slideCallback;

@@ -1,13 +1,11 @@
 # StepBar
 
-## 可以控制进度的步进条，支持静态及动态显示
+## step-by-step that can control progress, support static and dynamic display
 
-<img src="art/horizontal.gif"/>
+## horizontal and vertical static effect
 
-## 水平效果
+<img src="art/horizontal_demo.png" width="300px" /><img src="art/vertical_demo.png" width="300px"/>
 
-<img src="art/horizontal_static_1.jpg" width="200px"/>
+## horizontal and vertical dynamic effect
 
-<img src="art/horizontal_static_2.jpg" width="200px"/>
-
-<img src="art/horizontal_static_3.jpg" width="200px"/>
+<img src="art/horizontal.gif" width="300px" /><img src="art/vertical.gif" width="300px"/>

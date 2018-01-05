@@ -14,7 +14,7 @@ import android.view.SurfaceView;
  * Created by hd on 2018/1/3 .
  * surfaceView indicator
  */
-public abstract class SIndicator extends SurfaceView implements SurfaceHolder.Callback, Runnable, Indicator {
+public abstract class SIndicator extends SurfaceView implements SurfaceHolder.Callback, Indicator, Runnable {
 
     private boolean isDraw;
 

@@ -58,15 +58,19 @@ public class StepBar extends LinearLayout {
         stepBarViewIndicator.addConfig(config);
         stepBarViewIndicator.addSlideCallback(new StepBarViewIndicator.SlideCallback() {
             @Override
-            public void slide(final int x, final int y, final float radius) {
+            public void slide(final int iconCenterX, final int iconCenterY, final float radius) {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        viewGroup.scrollTo((int) (x - 4 * radius), y);
+                        // TODO: 2018/1/5 待优化
+//                        if (getOrientation() == HORIZONTAL) {
+//                            viewGroup.scrollTo((int) (iconCenterX - 4 * radius), iconCenterY);
+//                        }else{
+//                            viewGroup.scrollTo(-iconCenterX/4, iconCenterY);
+//                        }
                     }
                 });
-            }
-        });
+            }});
         linearLayout.addView(stepBarViewIndicator);
     }
 

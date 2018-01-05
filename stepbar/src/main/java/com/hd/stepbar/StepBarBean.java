@@ -47,9 +47,13 @@ public class StepBarBean {
      */
     private int failedTextColor = Color.RED;
     /**
-     * 图标外环光圈的颜色
+     * 图标外环光圈前景颜色
      */
-    private int outsideIconRingColor = Color.YELLOW;
+    private int outsideIconRingForegroundColor = Color.YELLOW;
+    /**
+     * 图标外环光圈背景颜色
+     */
+    private int outsideIconRingBackgroundColor = Color.WHITE;
     /**
      * 当前执行状态下文本内容
      */
@@ -150,12 +154,20 @@ public class StepBarBean {
         this.failedTextColor = failedTextColor;
     }
 
-    public int getOutsideIconRingColor() {
-        return outsideIconRingColor;
+    public int getOutsideIconRingForegroundColor() {
+        return outsideIconRingForegroundColor;
     }
 
-    public void setOutsideIconRingColor(int outsideIconRingColor) {
-        this.outsideIconRingColor = outsideIconRingColor;
+    public void setOutsideIconRingForegroundColor(int outsideIconRingForegroundColor) {
+        this.outsideIconRingForegroundColor = outsideIconRingForegroundColor;
+    }
+
+    public int getOutsideIconRingBackgroundColor() {
+        return outsideIconRingBackgroundColor;
+    }
+
+    public void setOutsideIconRingBackgroundColor(int outsideIconRingBackgroundColor) {
+        this.outsideIconRingBackgroundColor = outsideIconRingBackgroundColor;
     }
 
     public String getRunningText() {
@@ -250,8 +262,13 @@ public class StepBarBean {
             return this;
         }
 
-        public Builder setOutsideIconRingColor(int outsideIconRingColor) {
-            bean.outsideIconRingColor = outsideIconRingColor;
+        public Builder setOutsideIconRingForegroundColor(int outsideIconRingForegroundColor) {
+            bean.outsideIconRingForegroundColor = outsideIconRingForegroundColor;
+            return this;
+        }
+
+        public Builder setOutsideIconRingBackgroundColor(int outsideIconRingBackgroundColor) {
+            bean.outsideIconRingBackgroundColor = outsideIconRingBackgroundColor;
             return this;
         }
 

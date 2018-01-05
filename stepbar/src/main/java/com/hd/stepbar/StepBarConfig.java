@@ -78,26 +78,13 @@ public class StepBarConfig {
     }
 
     /**
-     * customizing connection line change effect when allowing state switching
+     * the outside icon ring width，if the value is not set, then will be adjust automatically
      */
-    public interface ConnectLineSwitchStateCallback{
-        /**
-         * @param config get current bean{@link this#getBeanList()} with position,
-         * and update others bean
-         * @param canvas step bar view canvas
-         * @param position current running position
-         */
-        void drawSwitchChange(StepBarConfig config, Canvas canvas, int position);
-    }
-
+    private float outsideIconRingWidth = -1;
     /**
-     * the outside icon ring width
+     * the text size,set the text size in pixel units
      */
-    private int outsideIconRingWidth = 2;
-    /**
-     * the text size
-     */
-    private float textSize = 30f;
+    private float textSize =30f;
     /**
      * the icon circle radius,
      * if the value is not set, the icon will be automatically resized in the allowable range，
@@ -115,13 +102,11 @@ public class StepBarConfig {
 
     private OutSideIconRingCallback outSideIconRingCallback;
 
-    private ConnectLineSwitchStateCallback connectLineSwitchStateCallback;
-
-    public int getOutsideIconRingWidth() {
+    public float getOutsideIconRingWidth() {
         return outsideIconRingWidth;
     }
 
-    public StepBarConfig setOutsideIconRingWidth(int outsideIconRingWidth) {
+    public StepBarConfig setOutsideIconRingWidth(float outsideIconRingWidth) {
         this.outsideIconRingWidth = outsideIconRingWidth;
         return this;
     }
@@ -178,13 +163,5 @@ public class StepBarConfig {
     public StepBarConfig addOutSideIconRingCallback(StepBarConfig.OutSideIconRingCallback outSideIconRingCallback) {
         this.outSideIconRingCallback = outSideIconRingCallback;
         return this;
-    }
-
-    public ConnectLineSwitchStateCallback getConnectLineSwitchStateCallback() {
-        return connectLineSwitchStateCallback;
-    }
-
-    public void addConnectLineSwitchStateCallback(ConnectLineSwitchStateCallback connectLineSwitchStateCallback) {
-        this.connectLineSwitchStateCallback = connectLineSwitchStateCallback;
     }
 }
