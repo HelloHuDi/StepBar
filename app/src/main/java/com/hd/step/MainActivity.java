@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.hd.step.fragment.HorizontalFragment;
-import com.hd.step.fragment.VerticalFragment;
+import com.hd.step.fragment.HorizontalDemoFragment;
+import com.hd.step.fragment.HorizontalDynamicFragment;
+import com.hd.step.fragment.VerticalDemoFragment;
+import com.hd.step.fragment.VerticalDynamicFragment;
 
 
 /**
@@ -24,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        baseFragment=new HorizontalFragment();
-        baseFragment=new VerticalFragment();
+        baseFragment=new VerticalDynamicFragment();
+//        baseFragment=new HorizontalDemoFragment();
         fragmentTransaction.add(R.id.stepbarContainer, baseFragment).commitAllowingStateLoss();
     }
     @Override
@@ -39,14 +41,21 @@ public class MainActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         switch (itemId) {
-            case R.id.action_horizontal_stepview:
-                baseFragment=new HorizontalFragment();
+            case R.id.action_horizontal_demo:
+                baseFragment=new HorizontalDemoFragment();
                 break;
-            case R.id.action_vertical_forward:
-                baseFragment=new VerticalFragment();
+            case R.id.action_vertical_demo:
+                baseFragment=new VerticalDemoFragment();
+                break;
+            case R.id.action_horizontal_dynamic:
+                baseFragment=new HorizontalDynamicFragment();
+                break;
+            case R.id.action_vertical_dynamic:
+                baseFragment=new VerticalDynamicFragment();
                 break;
         }
         fragmentTransaction.replace(R.id.stepbarContainer,baseFragment).commitAllowingStateLoss();
         return super.onOptionsItemSelected(item);
     }
+
 }

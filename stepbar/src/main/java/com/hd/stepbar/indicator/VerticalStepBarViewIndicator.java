@@ -56,7 +56,7 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
                                                 point.x + (int) outsideIconRingRadius, point.y + (int) outsideIconRingRadius);
             }
             //connect line
-            adjustConnectLineLength();
+            updateCurrentData();
         }
     }
 

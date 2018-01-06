@@ -29,7 +29,7 @@ public class BaseFragment extends Fragment {
     }
 
     protected LinkedList<StepBarBean> createLongTextBean(int count, int runningPosition) {
-        return getStepBarBeans(count, runningPosition, new String[]{"楼下超市有个妹子，长得很漂亮。前天为了要她微信就买了几百的吃的，结账时假装没带钱要求加个微信转账。然后她头也不抬的指着柜台的二维码，上面写着：不加好友也能支付！然后她头也不抬的指着柜台的二维码，上面写着：不加好友也能支付！" ,//
+        return getStepBarBeans(count, runningPosition, new String[]{"楼下超市有个妹子，长得很漂亮。前天为了要她微信就买了几百的吃的，结账时假装没带钱要求加个微信转账。然后她头也不抬的指着柜台的二维码，上面写着：不加好友也能支付!" ,//
                                                                     "金钱不能买到一切但能买到我，暴力不能解决一切但能解决你", //
                                                                     "这冬天嘴唇容易干裂，交代老妈上超市时帮买支润唇膏，涂抹了快两个月，刚发现是一只固体胶。。",//
                                                                     "酒天天哼着小曲，结果变成了曲酒"});

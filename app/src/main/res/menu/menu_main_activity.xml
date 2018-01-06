@@ -4,15 +4,26 @@
       tools:context=".ui.activity.HomeActivity">
 
     <item
-        android:id="@+id/action_horizontal_stepview"
+        android:id="@+id/action_horizontal_demo"
         android:orderInCategory="100"
-        android:title="horizontal StepBar"
+        android:title="Horizontal StepBar Demo"
+        app:showAsAction="withText"/>
+    <item
+        android:id="@+id/action_vertical_demo"
+        android:orderInCategory="100"
+        android:title="Vertical StepBar Demo"
         app:showAsAction="withText"/>
 
     <item
-        android:id="@+id/action_vertical_forward"
+        android:id="@+id/action_horizontal_dynamic"
         android:orderInCategory="100"
-        android:title="Vertical StepBar"
+        android:title="Horizontal Dynamic StepBar"
+        app:showAsAction="withText"/>
+
+    <item
+        android:id="@+id/action_vertical_dynamic"
+        android:orderInCategory="100"
+        android:title="Vertical Dynamic StepBar"
         app:showAsAction="withText"/>
 
 </menu>

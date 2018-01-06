@@ -56,7 +56,7 @@ public class HorizontalStepBarViewIndicator extends StepBarViewIndicator {
                                                 point.x + (int) iconRadius, point.y + (int) iconRadius);
             }
             //connect line
-            adjustConnectLineLength();
+            updateCurrentData();
         }
     }
 
