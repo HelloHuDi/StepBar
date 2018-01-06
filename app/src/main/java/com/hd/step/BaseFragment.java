@@ -56,8 +56,8 @@ public class BaseFragment extends Fragment {
                    .setOutsideIconRingBackgroundColor(Color.parseColor("#EEEE00"))//
                    .setConnectLineColor(Color.WHITE)//
                    .setRunningTextColor(Color.YELLOW)//
-                   .setCompletedTextColor(Color.GREEN)//
-                   .setWaitingTextColor(Color.DKGRAY)//
+                   .setCompletedTextColor(Color.WHITE)//
+                   .setWaitingTextColor(Color.LTGRAY)//
                    .setFailedTextColor(Color.RED)//
                    .setCompletedText(texts[0])//
                    .setRunningText(texts[1])//
