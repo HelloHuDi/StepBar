@@ -1,4 +1,4 @@
-# StepBar [![](https://img.shields.io/badge/release-v1.0-blue.svg)]() 
+# StepBar [![](https://img.shields.io/badge/release-v1.0-blue.svg)](https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk) 
 
 ## step-by-step that can control progress, support static and dynamic display
 
