@@ -406,23 +406,28 @@ public abstract class StepBarViewIndicator extends VIndicator {
                     updateCurrentData();
                     stopRingAnimator();
                     startRingAnimator();
+                    slideView();
                 } else {
                     //the current position icon state is no longer the running state,
                     //set static display，not refresh all the time
                     if (config.getBeanList().get(position).getState() != StepBarConfig.StepSate.RUNNING) {
                         config.setShowState(StepBarConfig.StepShowState.STATIC);
                         updateCurrentData();
+                        slideView();
                     }
                 }
             }
             startDraw(canvas);
-            if (slideCallback != null) {
-                Point point = centerPointList.get(position);
-                slideCallback.slide(point.x, point.y, outsideIconRingRadius);
-            }
         } else {
             stopRingAnimator();
             startDraw(canvas);
+        }
+    }
+
+    private void slideView() {
+        if (slideCallback != null) {
+            Point point = centerPointList.get(position);
+            slideCallback.slide(point.x, point.y, outsideIconRingRadius);
         }
     }
 
