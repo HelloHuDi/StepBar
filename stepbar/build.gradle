@@ -6,7 +6,7 @@ def siteUrl = 'https://github.com/HelloHuDi/StepBar'
 def gitUrl = 'git@github.com:HelloHuDi/StepBar.git'
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-version = "1.0"
+version = "1.1"
 group = "com.hd.stepbar"
 
 android {
