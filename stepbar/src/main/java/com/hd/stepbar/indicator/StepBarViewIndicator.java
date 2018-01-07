@@ -461,9 +461,9 @@ public abstract class StepBarViewIndicator extends VIndicator {
             if (linearLayout != null) {
                 linearLayout.destroyDrawingCache();
             }
-            textView=null;
-            relativeLayout=null;
-            linearLayout=null;
+            textView = null;
+            relativeLayout = null;
+            linearLayout = null;
         }
     }
 

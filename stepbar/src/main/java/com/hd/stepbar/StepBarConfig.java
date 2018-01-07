@@ -86,6 +86,12 @@ public class StepBarConfig {
      */
     private float textSize =30f;
     /**
+     * set whether to actively adjust the size of the text font.
+     * when the font size {@link this#textSize} is set beyond the available range,
+     * if the adjustment is allowed,then the font size is reduced until the text is fully accommodated
+     */
+    private boolean adjustTextSize=true;
+    /**
      * the icon circle radius,
      * if the value is not set, the icon will be automatically resized in the allowable range，
      * on the contrary, the icon will remain the specified size, and the view will slide
@@ -93,6 +99,10 @@ public class StepBarConfig {
      * or {@link android.widget.LinearLayout#VERTICAL} is set at the same time.
      */
     private int iconCircleRadius = 0;
+    /**
+     * the current running status icon exceeds the specified range to allow automatic sliding
+     */
+    private boolean allowAutoSlide=true;
 
     private LinkedList<StepBarBean> beanList;
 
@@ -120,6 +130,14 @@ public class StepBarConfig {
         return this;
     }
 
+    public boolean isAdjustTextSize() {
+        return adjustTextSize;
+    }
+
+    public void setAdjustTextSize(boolean adjustTextSize) {
+        this.adjustTextSize = adjustTextSize;
+    }
+
     public int getIconCircleRadius() {
         return iconCircleRadius;
     }
@@ -127,6 +145,14 @@ public class StepBarConfig {
     public StepBarConfig setIconCircleRadius(int iconCircleRadius) {
         this.iconCircleRadius = iconCircleRadius;
         return this;
+    }
+
+    public boolean isAllowAutoSlide() {
+        return allowAutoSlide;
+    }
+
+    public void setAllowAutoSlide(boolean allowAutoSlide) {
+        this.allowAutoSlide = allowAutoSlide;
     }
 
     public LinkedList<StepBarBean> getBeanList() {

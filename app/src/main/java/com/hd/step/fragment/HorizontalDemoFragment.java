@@ -64,7 +64,7 @@ public class HorizontalDemoFragment extends BaseFragment {
      */
     private void initStepBar4(StepBar stepBar) {
         initTimeTask();
-        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(6, 0))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(12, 0))//
                                                   .setIconCircleRadius(40)//注释后自动调整大小
                                                   .setShowState(StepBarConfig.StepShowState.DYNAMIC)//
                                                   .addStepCallback(new StepBarConfig.StepCallback() {

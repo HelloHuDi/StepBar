@@ -16,7 +16,8 @@ public class HorizontalDynamicFragment extends DynamicFragment {
 
     @Override
     void initStepBar() {
-        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(10, 0))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(12, 0))//
+                                                  .setIconCircleRadius(50)
                                                   .setShowState(StepBarConfig.StepShowState.DYNAMIC)
                                                   .addStepCallback(this);
         stepBar.addConfig(config);

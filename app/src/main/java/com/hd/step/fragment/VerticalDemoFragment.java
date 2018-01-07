@@ -47,7 +47,7 @@ public class VerticalDemoFragment extends BaseFragment {
 
     private void initStepBar3(StepBar stepBar) {
         initTimeTask();
-        StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(6, 0))//
+        StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(15, 0))//
                                                   .setIconCircleRadius(40)//注释后自动调整大小
                                                   .setShowState(StepBarConfig.StepShowState.DYNAMIC)//
                                                   .addStepCallback(new StepBarConfig.StepCallback() {

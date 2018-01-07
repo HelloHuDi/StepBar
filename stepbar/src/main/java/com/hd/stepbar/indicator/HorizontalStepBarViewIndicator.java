@@ -45,7 +45,8 @@ public class HorizontalStepBarViewIndicator extends StepBarViewIndicator {
             centerPointList.clear();
             int beanSize = config.getBeanList().size();
             selectRightRadius(w, h, beanSize);
-            adjustFontSize();
+            if (config.isAdjustTextSize())
+                adjustFontSize();
             for (int index = 0, count = config.getBeanList().size(); index < count; index++) {
                 @SuppressLint("DrawAllocation") Point point = new Point();
                 point.x = (int) (paddingLeft + index * outsideIconRingRadius * 2 + index * connectLineLength + outsideIconRingRadius);

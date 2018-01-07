@@ -47,7 +47,7 @@ public class StepBar extends LinearLayout {
         final Handler handler = new Handler();
         getViewGroup();
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.step_bar, viewGroup);
-        LinearLayout linearLayout = rootView.findViewById(R.id.stepBarGroup);
+        final LinearLayout linearLayout = rootView.findViewById(R.id.stepBarGroup);
         final StepBarViewIndicator stepBarViewIndicator;
         if (getOrientation() == HORIZONTAL) {
             stepBarViewIndicator = new HorizontalStepBarViewIndicator(getContext());
@@ -56,21 +56,23 @@ public class StepBar extends LinearLayout {
         }
         linearLayout.removeAllViews();
         stepBarViewIndicator.addConfig(config);
-        stepBarViewIndicator.addSlideCallback(new StepBarViewIndicator.SlideCallback() {
-            @Override
-            public void slide(final int iconCenterX, final int iconCenterY, final float radius) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO: 2018/1/5 待优化
-//                        if (getOrientation() == HORIZONTAL) {
-//                            viewGroup.scrollTo((int) (iconCenterX - 4 * radius), iconCenterY);
-//                        }else{
-//                            viewGroup.scrollTo(-iconCenterX/4, iconCenterY);
-//                        }
-                    }
-                });
-            }});
+        if (config.isAllowAutoSlide()) {
+            stepBarViewIndicator.addSlideCallback(new StepBarViewIndicator.SlideCallback() {
+                @Override
+                public void slide(final int iconCenterX, final int iconCenterY, final float radius) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (getOrientation() == HORIZONTAL) {
+                                ((HorizontalScrollView) viewGroup).smoothScrollTo(iconCenterX - viewGroup.getWidth() / 2, iconCenterY);
+                            } else {
+                                ((ScrollView) viewGroup).smoothScrollTo(-iconCenterX / 4, iconCenterY - viewGroup.getMeasuredHeight() / 2);
+                            }
+                        }
+                    });
+                }
+            });
+        }
         linearLayout.addView(stepBarViewIndicator);
     }
 

@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         baseFragment=new VerticalDynamicFragment();
-//        baseFragment=new HorizontalDemoFragment();
         fragmentTransaction.add(R.id.stepbarContainer, baseFragment).commitAllowingStateLoss();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);

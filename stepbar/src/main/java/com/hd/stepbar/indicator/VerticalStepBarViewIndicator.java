@@ -45,7 +45,8 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
             centerPointList.clear();
             int beanSize = config.getBeanList().size();
             selectRightRadius(w, h, beanSize);
-            adjustFontSize();
+            if (config.isAdjustTextSize())
+                adjustFontSize();
             for (int index = 0, count = config.getBeanList().size(); index < count; index++) {
                 @SuppressLint("DrawAllocation") Point point = new Point();
                 point.x = (int) (paddingLeft + outsideIconRingRadius);
@@ -69,29 +70,29 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
         //there may be multiple lines of text
         String maxCountText = getMaxCountText();
         float maxCountTextWidth = measureFontSize(maxCountText)[0];
-        float availableTextHeight = 2 * outsideIconRingRadius+2*(outsideIconRingRadius/3.0f);
+        float availableTextHeight = 2 * outsideIconRingRadius + 2 * (outsideIconRingRadius / 3.0f);
         if (maxCountTextWidth < availableTextWidth) {//single lines of text
             adjustFontSize(maxCountText);
         } else {//multiple lines of text
             getNumCount(maxCountText);
-            Log.e("tag","multiple lines of text and need adjust font size,current font size :"+textSize+",lines :"+numCount);
+            Log.e("tag", "multiple lines of text and need adjust font size,current font size :" + textSize + ",lines :" + numCount);
             int allTextHeight = getAllNumTextHeight();
             while (allTextHeight > availableTextHeight) {
                 textSize -= 0.2f;
                 config.setTextSize(textSize);
                 setPaintTextSize();
-                numCount=1;
+                numCount = 1;
                 getNumCount(maxCountText);
                 allTextHeight = getAllNumTextHeight();
             }
-            Log.e("tag","font size after adjusting :"+textSize+",lines :"+numCount);
+            Log.e("tag", "font size after adjusting :" + textSize + ",lines :" + numCount);
         }
     }
 
     private int getAllNumTextHeight() {
         int num = numCount;
-        int allTextHeight=0;
-        float height=measureFontSize()[1];
+        int allTextHeight = 0;
+        float height = measureFontSize()[1];
         while (num > 0) {
             allTextHeight += height;
             num--;
@@ -107,8 +108,8 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
             text_width += measureFontSize(String.valueOf(text.charAt(index)))[0];
             if (text_width > availableTextWidth) {
                 numCount++;
-                String s=text.substring(index, count);
-               return getNumCount(s);
+                String s = text.substring(index, count);
+                return getNumCount(s);
             }
         }
         return numCount++;
