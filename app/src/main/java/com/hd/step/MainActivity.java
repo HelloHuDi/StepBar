@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        baseFragment=new VerticalDynamicFragment();
+        baseFragment=new HorizontalDemoFragment();
         fragmentTransaction.add(R.id.stepbarContainer, baseFragment).commitAllowingStateLoss();
     }
 

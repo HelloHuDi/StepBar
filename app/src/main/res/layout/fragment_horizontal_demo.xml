@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<com.hd.stepbar.StepBar
+    <com.hd.stepbar.StepBar
         android:id="@+id/stepBar1"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
         android:orientation="horizontal"/>
+
     <com.hd.stepbar.StepBar
         android:id="@+id/stepBar2"
         android:layout_width="match_parent"
