@@ -1,6 +1,7 @@
 package com.hd.stepbar;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 
 import java.util.LinkedList;
 
@@ -72,9 +73,11 @@ public class StepBarConfig {
          * @param config get current bean{@link this#getBeanList()} with position,
          * and update others bean
          * @param canvas step bar view canvas
+         * @param point circle center point
+         * @param radius circle radius
          * @param position current running position
          */
-        void drawRing(StepBarConfig config, Canvas canvas, int position);
+        void drawRing(StepBarConfig config, Canvas canvas, Point point, float radius, int position);
     }
 
     /**
@@ -84,13 +87,13 @@ public class StepBarConfig {
     /**
      * the text size,set the text size in pixel units
      */
-    private float textSize =30f;
+    private float textSize = 30f;
     /**
      * set whether to actively adjust the size of the text font.
      * when the font size {@link this#textSize} is set beyond the available range,
      * if the adjustment is allowed,then the font size is reduced until the text is fully accommodated
      */
-    private boolean adjustTextSize=true;
+    private boolean adjustTextSize = true;
     /**
      * the icon circle radius,
      * if the value is not set, the icon will be automatically resized in the allowable range，
@@ -102,7 +105,7 @@ public class StepBarConfig {
     /**
      * the current running status icon exceeds the specified range to allow automatic sliding
      */
-    private boolean allowAutoSlide=true;
+    private boolean allowAutoSlide = true;
 
     private LinkedList<StepBarBean> beanList;
 

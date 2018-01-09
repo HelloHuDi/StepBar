@@ -234,7 +234,7 @@ public abstract class StepBarViewIndicator extends VIndicator {
             //draw dynamic outside ring
             if (bean.getState() == StepBarConfig.StepSate.RUNNING && outsideIconRingRadius > iconRadius) {
                 if (config.getOutSideIconRingCallback() != null) {
-                    config.getOutSideIconRingCallback().drawRing(config, canvas, position);
+                    config.getOutSideIconRingCallback().drawRing(config, canvas, point, outsideIconRingRadius, position);
                 } else if (ringAnimator != null) {
                     drawDefaultRingAnimatorEffect(canvas, point, bean);
                 }
@@ -242,7 +242,11 @@ public abstract class StepBarViewIndicator extends VIndicator {
         } else {//static state
             //draw static outside ring
             if (bean.getState() == StepBarConfig.StepSate.RUNNING && outsideIconRingRadius > iconRadius) {
-                drawBackgroundRing(canvas, point, bean);
+                if (config.getOutSideIconRingCallback() != null) {
+                    config.getOutSideIconRingCallback().drawRing(config, canvas, point, outsideIconRingRadius, position);
+                } else {
+                    drawBackgroundRing(canvas, point, bean);
+                }
             }
         }
     }
