@@ -11,6 +11,9 @@ import java.util.LinkedList;
  */
 public class StepBarConfig {
 
+    /**
+     * StepBarBean show state
+     */
     public enum StepSate {
         /**
          * current working state
@@ -33,6 +36,40 @@ public class StepBarConfig {
         FAILED
     }
 
+    /**
+     * StepBarBean text location
+     */
+    public enum StepTextLocation {
+
+        /**
+         * the text is on the icon,
+         * has effective only in the horizontal direction {@link android.widget.LinearLayout#HORIZONTAL}
+         */
+        TOP,
+
+        /**
+         * the text is under the icon,
+         * has effective only in the horizontal direction {@link android.widget.LinearLayout#HORIZONTAL}
+         */
+        BOTTOM,
+
+        /**
+         * the text is left the icon,
+         * has effective only in the vertical direction {@link android.widget.LinearLayout#VERTICAL}
+         */
+        LEFT,
+
+        /**
+         * the text is right the icon,
+         * has effective only in the vertical direction {@link android.widget.LinearLayout#VERTICAL}
+         */
+        RIGHT
+
+    }
+
+    /**
+     * StepBar show state
+     */
     public enum StepShowState {
 
         /**
@@ -106,6 +143,12 @@ public class StepBarConfig {
      * the current running status icon exceeds the specified range to allow automatic sliding
      */
     private boolean allowAutoSlide = true;
+    /**
+     * whether the text in the running state needs to be set in bold
+     */
+    private boolean showTextBold = true;
+
+    private StepTextLocation textLocation;
 
     private LinkedList<StepBarBean> beanList;
 
@@ -137,8 +180,9 @@ public class StepBarConfig {
         return adjustTextSize;
     }
 
-    public void setAdjustTextSize(boolean adjustTextSize) {
+    public StepBarConfig setAdjustTextSize(boolean adjustTextSize) {
         this.adjustTextSize = adjustTextSize;
+        return this;
     }
 
     public int getIconCircleRadius() {
@@ -154,8 +198,27 @@ public class StepBarConfig {
         return allowAutoSlide;
     }
 
-    public void setAllowAutoSlide(boolean allowAutoSlide) {
+    public StepBarConfig setAllowAutoSlide(boolean allowAutoSlide) {
         this.allowAutoSlide = allowAutoSlide;
+        return this;
+    }
+
+    public boolean isShowTextBold() {
+        return showTextBold;
+    }
+
+    public StepBarConfig setShowTextBold(boolean showTextBold) {
+        this.showTextBold = showTextBold;
+        return this;
+    }
+
+    public StepTextLocation getTextLocation() {
+        return textLocation;
+    }
+
+    public StepBarConfig setTextLocation(StepTextLocation textLocation) {
+        this.textLocation = textLocation;
+        return this;
     }
 
     public LinkedList<StepBarBean> getBeanList() {

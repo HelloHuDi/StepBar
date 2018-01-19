@@ -71,6 +71,10 @@ public class StepBarBean {
      */
     private String failedText;
     /**
+     * 若文本不需要跟随状态发生变化，则可以直接设置该值
+     */
+    private String text;
+    /**
      * 设置进行状态,默认状态下为等待状态
      */
     private StepBarConfig.StepSate state = StepBarConfig.StepSate.WAITING;
@@ -202,6 +206,14 @@ public class StepBarBean {
         this.failedText = failedText;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public StepBarConfig.StepSate getState() {
         return state;
     }
@@ -289,6 +301,11 @@ public class StepBarBean {
 
         public Builder setFailedText(String failedText) {
             bean.failedText = failedText;
+            return this;
+        }
+
+        public Builder setText(String text) {
+            bean.text = text;
             return this;
         }
 

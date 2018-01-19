@@ -41,6 +41,7 @@ public class VerticalDemoFragment extends BaseFragment {
     private void initStepBar2(StepBar stepBar) {
         StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(20, 2))//
                                                   .setIconCircleRadius(30)//
+                                                  .setTextLocation(StepBarConfig.StepTextLocation.LEFT)
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
     }
@@ -72,6 +73,7 @@ public class VerticalDemoFragment extends BaseFragment {
     private void initStepBar4(StepBar stepBar) {
         StepBarConfig config = new StepBarConfig().setBeanList(createLongTextBean(12, 2))//
                                                   .setOutsideIconRingWidth(5)//
+                                                  .setTextLocation(StepBarConfig.StepTextLocation.LEFT)
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
     }

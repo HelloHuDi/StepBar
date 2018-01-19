@@ -6,6 +6,8 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 
+import com.hd.stepbar.StepBarConfig;
+
 
 /**
  * Created by hd on 2017/12/30 .
@@ -47,10 +49,16 @@ public class HorizontalStepBarViewIndicator extends StepBarViewIndicator {
             selectRightRadius(w, h, beanSize);
             if (config.isAdjustTextSize())
                 adjustFontSize();
+            float[] textSizes = measureFontSize();
+            float textHeight = textSizes[1];
             for (int index = 0, count = config.getBeanList().size(); index < count; index++) {
                 @SuppressLint("DrawAllocation") Point point = new Point();
                 point.x = (int) (paddingLeft + index * outsideIconRingRadius * 2 + index * connectLineLength + outsideIconRingRadius);
-                point.y = (int) (paddingTop + outsideIconRingRadius);
+                if (config.getTextLocation() == StepBarConfig.StepTextLocation.TOP) {
+                    point.y = (int) (paddingTop + outsideIconRingRadius + textHeight + middleMargin);
+                } else {
+                    point.y = (int) (paddingTop + outsideIconRingRadius);
+                }
                 centerPointList.add(point);
                 //add icon rect
                 iconRectArray[index] = new Rect(point.x - (int) iconRadius, point.y - (int) iconRadius, //

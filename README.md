@@ -2,6 +2,10 @@
 
 ## step-by-step that can control progress, support static and dynamic display
 
+## using mobile browser scan the QRcode to download demo
+
+<img src="art/qrcode.png"/> 
+
 ## horizontal and vertical static effect
 
 <img src="art/logistics_information.png" width="250px"/>  <img src="art/horizontal_demo.png" width="250px" />  <img src="art/vertical_demo.png" width="250px"/>

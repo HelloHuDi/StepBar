@@ -45,7 +45,8 @@ public class HorizontalDemoFragment extends BaseFragment {
      * 静态 ，大小动态调整
      */
     private void initStepBar2(StepBar stepBar) {
-        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(10, 0));
+        StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(10, 0))
+                .setTextLocation(StepBarConfig.StepTextLocation.TOP);
         stepBar.addConfig(config);
     }
 
@@ -55,6 +56,7 @@ public class HorizontalDemoFragment extends BaseFragment {
     private void initStepBar3(StepBar stepBar) {
         StepBarConfig config = new StepBarConfig().setBeanList(createShortTextBean(10, 2))//
                                                   .setIconCircleRadius(50)//
+                                                  .setTextLocation(StepBarConfig.StepTextLocation.TOP)
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
     }

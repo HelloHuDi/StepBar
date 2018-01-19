@@ -32,7 +32,8 @@ public class LogisticsInformationFragment extends BaseFragment {
 
     private void initStepBar(StepBar stepBar) {
         StepBarConfig config = new StepBarConfig().setBeanList(createBean(5))//
-                                                  .setIconCircleRadius(40)
+                                                  .setIconCircleRadius(35)
+                                                  .setShowTextBold(true)
                                                   .setShowState(StepBarConfig.StepShowState.STATIC);
         stepBar.addConfig(config);
     }
@@ -59,10 +60,6 @@ public class LogisticsInformationFragment extends BaseFragment {
             StepBarBean.Builder builder = new StepBarBean.Builder(getActivity());
             if (a == runningPosition) {
                 builder.setState(StepBarConfig.StepSate.RUNNING);
-            } else if (a < runningPosition) {
-                builder.setState(StepBarConfig.StepSate.COMPLETED);
-            } else {
-                builder.setState(StepBarConfig.StepSate.WAITING);
             }
             builder.setRunningIcon(ContextCompat.getDrawable(getActivity(), R.drawable.li_running))//
                    .setWaitingIcon(ContextCompat.getDrawable(getActivity(), R.drawable.li_running))//
@@ -75,10 +72,7 @@ public class LogisticsInformationFragment extends BaseFragment {
                    .setCompletedTextColor(Color.WHITE)//
                    .setWaitingTextColor(Color.WHITE)//
                    .setFailedTextColor(Color.RED)//
-                   .setCompletedText(texts[a])//
-                   .setRunningText(texts[a])//
-                   .setWaitingText(texts[a])//
-                   .setFailedText(texts[a]);
+                   .setText(texts[a]);//
             StepBarBean bean = builder.build();
             beanLinkedList.add(bean);
             a++;

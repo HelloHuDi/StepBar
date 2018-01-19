@@ -7,6 +7,8 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.hd.stepbar.StepBarConfig;
+
 /**
  * Created by hd on 2017/12/31 .
  * vertical step bar view indicator
@@ -49,7 +51,11 @@ public class VerticalStepBarViewIndicator extends StepBarViewIndicator {
                 adjustFontSize();
             for (int index = 0, count = config.getBeanList().size(); index < count; index++) {
                 @SuppressLint("DrawAllocation") Point point = new Point();
-                point.x = (int) (paddingLeft + outsideIconRingRadius);
+                if(config.getTextLocation()== StepBarConfig.StepTextLocation.LEFT){
+                    point.x = (int) (getMeasuredWidth() - getPaddingRight() - paddingRight-outsideIconRingRadius);
+                }else{
+                    point.x = (int) (paddingLeft + outsideIconRingRadius);
+                }
                 point.y = (int) (paddingTop + index * outsideIconRingRadius * 2 + index * connectLineLength + outsideIconRingRadius);
                 centerPointList.add(point);
                 //add icon rect

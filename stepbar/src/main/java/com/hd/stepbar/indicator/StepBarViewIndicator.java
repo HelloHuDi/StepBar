@@ -552,17 +552,32 @@ public abstract class StepBarViewIndicator extends VIndicator {
         float textHeight = textSizes[1];
         Rect rect;
         if (orientation == 0) {//horizontal
-            rect = new Rect((int) (point.x - textWidth / 2), (int) (point.y + outsideIconRingRadius + middleMargin),//
-                            (int) (point.x + textWidth / 2), (int) (point.y + outsideIconRingRadius + textHeight + middleMargin));
+            if (config.getTextLocation() == StepBarConfig.StepTextLocation.TOP) {
+                rect = new Rect((int) (point.x - textWidth / 2), (int) paddingTop,//
+                                (int) (point.x + textWidth / 2), (int) (paddingTop+textHeight));
+            } else {
+                rect = new Rect((int) (point.x - textWidth / 2), (int) (point.y + outsideIconRingRadius + middleMargin),//
+                                (int) (point.x + textWidth / 2), (int) (point.y + outsideIconRingRadius + textHeight + middleMargin));
+            }
         } else {//vertical
-            rect = new Rect(
-                    (int) (point.x + outsideIconRingRadius + middleMargin), //
-                    (int) (point.y - outsideIconRingRadius - outsideIconRingRadius / 3.0f),//
-                    (int) (getMeasuredWidth() - getPaddingRight() - paddingRight),//
-                    (int) (point.y + outsideIconRingRadius + outsideIconRingRadius / 3.0f));
+            if(config.getTextLocation()== StepBarConfig.StepTextLocation.LEFT){
+                rect = new Rect((int)paddingLeft,(int) (point.y - outsideIconRingRadius - outsideIconRingRadius / 3.0f),//
+                                (int) (paddingLeft+availableTextWidth),//
+                                (int) (point.y + outsideIconRingRadius + outsideIconRingRadius / 3.0f));
+            }else {
+                rect = new Rect(
+                        (int) (point.x + outsideIconRingRadius + middleMargin), //
+                        (int) (point.y - outsideIconRingRadius - outsideIconRingRadius / 3.0f),//
+                        (int) (getMeasuredWidth() - getPaddingRight() - paddingRight),//
+                        (int) (point.y + outsideIconRingRadius + outsideIconRingRadius / 3.0f));
+            }
         }
-        if (bean.getState() == StepBarConfig.StepSate.RUNNING) {
-            textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        if (config.isShowTextBold()) {
+            if (bean.getState() == StepBarConfig.StepSate.RUNNING) {
+                textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            } else {
+                textView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+            }
         } else {
             textView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         }
