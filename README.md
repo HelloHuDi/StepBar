@@ -20,7 +20,7 @@
 
 ```
 dependencies {
-    compile 'com.hd.stepbar:stepbar:1.3'
+    compile 'com.hd.stepbar:stepbar:1.4'
 }
 ```
 ### in xml
