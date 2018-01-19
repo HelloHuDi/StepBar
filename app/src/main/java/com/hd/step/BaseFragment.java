@@ -35,8 +35,10 @@ public class BaseFragment extends Fragment {
                                                                     "酒天天哼着小曲，结果变成了曲酒"});
     }
 
+
+
     @NonNull
-    private LinkedList<StepBarBean> getStepBarBeans(int count, int runningPosition, String[] texts) {
+    protected LinkedList<StepBarBean> getStepBarBeans(int count, int runningPosition, String[] texts) {
         int a = 0;
         LinkedList<StepBarBean> beanLinkedList = new LinkedList<>();
         while (a < count) {

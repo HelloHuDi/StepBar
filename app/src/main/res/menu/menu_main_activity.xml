@@ -4,10 +4,17 @@
       tools:context=".ui.activity.HomeActivity">
 
     <item
+        android:id="@+id/logistics_information_demo"
+        android:orderInCategory="100"
+        android:title="Logistics Information Demo"
+        app:showAsAction="withText"/>
+
+    <item
         android:id="@+id/action_horizontal_demo"
         android:orderInCategory="100"
         android:title="Horizontal StepBar Demo"
         app:showAsAction="withText"/>
+
     <item
         android:id="@+id/action_vertical_demo"
         android:orderInCategory="100"

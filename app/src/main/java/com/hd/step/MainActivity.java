@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.hd.step.fragment.HorizontalDemoFragment;
 import com.hd.step.fragment.HorizontalDynamicFragment;
+import com.hd.step.fragment.LogisticsInformationFragment;
 import com.hd.step.fragment.VerticalDemoFragment;
 import com.hd.step.fragment.VerticalDynamicFragment;
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        baseFragment=new HorizontalDemoFragment();
+        baseFragment=new LogisticsInformationFragment();
         fragmentTransaction.add(R.id.stepbarContainer, baseFragment).commitAllowingStateLoss();
     }
 
@@ -41,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         switch (itemId) {
+            case R.id.logistics_information_demo:
+                baseFragment=new LogisticsInformationFragment();
+                break;
             case R.id.action_horizontal_demo:
                 baseFragment=new HorizontalDemoFragment();
                 break;
