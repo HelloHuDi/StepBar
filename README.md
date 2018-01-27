@@ -1,5 +1,5 @@
 <p align="center">
-	<img width="256" height="256" src="art/icon.png"/>
+	<img width="72" height="72" src="art/icon.png"/>
 </p>
 <h1 align="center">StepBar</h1>
 <p align="center">
