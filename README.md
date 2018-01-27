@@ -1,7 +1,7 @@
 <p align="center">
 	<img width="72" height="72" src="art/icon.png"/>
 </p>
-<h1 align="center">StepBar</h1>
+<h3 align="center">StepBar</h3>
 <p align="center">
 <a href="https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk" target="_blank"><img src="https://img.shields.io/badge/release-v1.4-blue.svg"></img></a>
 <a href="https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk" target="_blank"><img src="https://img.shields.io/badge/demo-v1.4-blue.svg"></img></a>
