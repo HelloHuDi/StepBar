@@ -1,9 +1,11 @@
 <p align="center">
-	<img width="130px" src="art/icon.png"/>
-	<br/><h1 align="center">StepBar</h1><br/><br/>
+	<img width="256" height="256" src="art/icon.png"/>
 </p>
-
-# [![](https://img.shields.io/badge/release-v1.4-blue.svg)](https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk) [![](https://img.shields.io/badge/demo-v1.4-blue.svg)](https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk) 
+<h1 align="center">StepBar</h1>
+<p align="center">
+<a href="https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk" target="_blank"><img src="https://img.shields.io/badge/release-v1.4-blue.svg"></img></a>
+<a href="https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk" target="_blank"><img src="https://img.shields.io/badge/demo-v1.4-blue.svg"></img></a>
+</p>
 
 ## step-by-step that can control progress, support static and dynamic display
 
