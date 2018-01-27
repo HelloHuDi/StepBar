@@ -1,10 +1,11 @@
-# StepBar [![](https://img.shields.io/badge/release-v1.4-blue.svg)](https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk) [![](https://img.shields.io/badge/demo-v1.4-blue.svg)](https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk) 
+<p align="center">
+	<img width="130px" src="art/icon.png"/>
+	<br/><h1 align="center">StepBar</h1><br/><br/>
+</p>
+
+# [![](https://img.shields.io/badge/release-v1.4-blue.svg)](https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk) [![](https://img.shields.io/badge/demo-v1.4-blue.svg)](https://github.com/HelloHuDi/StepBar/raw/master/app/release/app-release.apk) 
 
 ## step-by-step that can control progress, support static and dynamic display
-
-## using mobile browser scan the QRcode to download demo
-
-<img src="art/qrcode.png"/> 
 
 ## horizontal and vertical static effect
 
@@ -91,3 +92,7 @@ StepBarConfig config = new StepBarConfig()
                       //add progress control call back
                       .addStepCallback(StepBarConfig.StepCallback);
 ```
+
+## using mobile browser scan the QRcode to download demo
+
+<img src="art/qrcode.png"/> 
