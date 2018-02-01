@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.hd.splashscreen.SimpleSplashScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/splash_container"
@@ -8,48 +8,4 @@
     android:background="@android:color/white"
     android:gravity="center"
     android:orientation="horizontal"
-    tools:context="com.hd.step.SplashActivity">
-
-    <TextView
-        android:id="@+id/tvS"
-        style="@style/splashTextStyle"
-        android:text="S"/>
-
-    <TextView
-        android:id="@+id/tvT"
-        style="@style/splashTextStyle"
-        android:text="T"/>
-
-    <TextView
-        android:id="@+id/tvE"
-        style="@style/splashTextStyle"
-        android:text="E"/>
-
-    <TextView
-        android:id="@+id/tvP"
-        style="@style/splashTextStyle"
-        android:text="P"/>
-
-    <TextView
-        android:id="@+id/tvB"
-        style="@style/splashTextStyle"
-        android:text="B"/>
-
-    <TextView
-        android:id="@+id/tvA"
-        style="@style/splashTextStyle"
-        android:text="A"/>
-
-    <TextView
-        android:id="@+id/tvR"
-        style="@style/splashTextStyle"
-        android:text="R"/>
-
-    <ImageView
-        android:id="@+id/ivI"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_marginTop="18dp"
-        android:src="@mipmap/icon"
-        android:visibility="invisible"/>
-</LinearLayout>
+    tools:context="com.hd.step.SplashActivity"/>

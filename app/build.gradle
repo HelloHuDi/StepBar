@@ -32,4 +32,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 //    implementation project(':stepbar')
     implementation 'com.hd.stepbar:stepbar:1.4'
+    implementation 'com.hd.splashscreen:splashscreen:1.3'
 }
